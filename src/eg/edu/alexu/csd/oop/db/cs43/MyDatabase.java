@@ -14,6 +14,8 @@ public class MyDatabase implements Database {
 	public MyDatabase() {
 		commandsParser = new CommandsParser();
 	}
+	
+	
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {

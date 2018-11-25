@@ -10,10 +10,7 @@ import javafx.scene.chart.PieChart.Data;
 public class CommandsParser {
 	private String tableName;
 	private List<String> columns;
-	Database database ;
-	public CommandsParser() {
-		database = new MyDatabase();
-	}
+	
 	public String [] ReturnString() {
 		
 		return null;
@@ -47,7 +44,6 @@ public class CommandsParser {
 		if(strs[0].equalsIgnoreCase("create")) {
 			if(strs[1].equalsIgnoreCase("database")) {
 				if (strs.length == 3) {
-					
 					return new String[] {"create", "database",strs[2]};
 				}
 			}else if(strs[1].equalsIgnoreCase("table")) {

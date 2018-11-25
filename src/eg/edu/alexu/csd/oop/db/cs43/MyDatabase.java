@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs43;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import eg.edu.alexu.csd.oop.db.Database;
 
 public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
-
+	private File file;
 	public MyDatabase() {
 		commandsParser = new CommandsParser();
 	}
@@ -19,31 +20,33 @@ public class MyDatabase implements Database {
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		if (dropIfExists) {
+		file = new  File(databaseName);
+		
+		if (dropIfExists) {			
 			try {
-				executeQuery("create database " + databaseName);
+				executeStructureQuery("drop database " + databaseName);	
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
 			}
-		} else {
-			try {
-				executeQuery("drop database " + databaseName);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} 
+		try {
+			executeStructureQuery("create database " + databaseName);
+		} catch (SQLException e) {
+			
 		}
-		return null;
+		
+		return  file.getAbsolutePath();
 
 	}
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
 		String[] commandWords = commandsParser.validateCommand(query);
+		
 		if (commandWords[0].equalsIgnoreCase("create")) {
 			if (commandWords[1].equalsIgnoreCase("database")) {
-				createDatabase(commandWords[2]);
+				return file.mkdirs();
+				
 			} else if (commandWords[1].equalsIgnoreCase("table")) {
 				int numOfColumns = (commandWords.length - 3) / 2;
 				String[] columns = new String[numOfColumns];
@@ -58,12 +61,15 @@ public class MyDatabase implements Database {
 					types[counter] = commandWords[i];
 				}
 				createTable(commandWords[2], columns, types);
+				
+				return true;
 			}
 		} else if (commandWords[0].equalsIgnoreCase("drop")) {
 			if (commandWords[1].equalsIgnoreCase("database")) {
-				dropDatabase(commandWords[2]);
+				return file.delete();
 			} else if (commandWords[1].equalsIgnoreCase("table")) {
 				dropTable(commandWords[2]);
+				return true;
 			}
 
 		}
@@ -112,9 +118,7 @@ public class MyDatabase implements Database {
 		return 0;
 	}
 
-	private boolean createDatabase(String string) {
-		return false;
-	}
+	
 
 	private boolean createTable(String string, String[] columns, String[] types) {
 		// TODO Auto-generated method stub
@@ -126,9 +130,9 @@ public class MyDatabase implements Database {
 		return false;
 	}
 
-	private boolean dropDatabase(String string) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
+		
+		
+	
 
 }

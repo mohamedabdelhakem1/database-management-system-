@@ -4,15 +4,40 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import eg.edu.alexu.csd.oop.db.Database;
+import javafx.scene.chart.PieChart.Data;
+
 public class CommandsParser {
 	private String tableName;
 	private List<String> columns;
+	Database database ;
 	public CommandsParser() {
-		
+		database = new MyDatabase();
 	}
 	public String [] ReturnString() {
 		
 		return null;
+	}
+	public void executeCommands(String command) {
+		String  pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s*,\\s*]{1,})|(([)]{1})\\s*)" ;
+		Pattern pat = Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+	    String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
+	    
+		if(strs[0].equalsIgnoreCase("create")) {
+			
+		}else if(strs[0].equalsIgnoreCase("drop")) {
+			
+		}else if(strs[0].equalsIgnoreCase("insert")) {
+			
+		}else if(strs[0].equalsIgnoreCase("update")) {
+			
+		}else if(strs[0].equalsIgnoreCase("delete")) {
+			
+		}else if(strs[0].equalsIgnoreCase("select")) {
+			  
+		}
+		
+		
 	}
 	public String [] validateCommand(String command) {
 		String  pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s*,\\s*]{1,})|(([)]{1})\\s*)" ;
@@ -22,6 +47,7 @@ public class CommandsParser {
 		if(strs[0].equalsIgnoreCase("create")) {
 			if(strs[1].equalsIgnoreCase("database")) {
 				if (strs.length == 3) {
+					
 					return new String[] {"create", "database",strs[2]};
 				}
 			}else if(strs[1].equalsIgnoreCase("table")) {

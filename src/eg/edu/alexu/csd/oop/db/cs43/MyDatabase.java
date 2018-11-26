@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs43;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 
 import eg.edu.alexu.csd.oop.db.Database;
 
@@ -13,7 +14,7 @@ public class MyDatabase implements Database {
 	private MyDatabase() {
 		commandsParser = new CommandsParser();
 	}
-	
+
 	public static Database getInstance() {
 		if (database == null) {
 			database = new MyDatabase();
@@ -25,7 +26,6 @@ public class MyDatabase implements Database {
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
 		file = new File(databaseName);
-
 		if (dropIfExists) {
 			try {
 				executeStructureQuery("drop database " + databaseName);
@@ -46,7 +46,6 @@ public class MyDatabase implements Database {
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
 		String[] commandWords = commandsParser.validateCommand(query);
-
 		if (commandWords[0].equalsIgnoreCase("create")) {
 			if (commandWords[1].equalsIgnoreCase("database")) {
 				return file.mkdirs();
@@ -71,8 +70,8 @@ public class MyDatabase implements Database {
 			if (commandWords[1].equalsIgnoreCase("database")) {
 				return file.delete();
 			} else if (commandWords[1].equalsIgnoreCase("table")) {
-				dropTable(commandWords[2]);
-				return true;
+				return dropTable(commandWords[2]);
+
 			}
 
 		}
@@ -135,6 +134,17 @@ public class MyDatabase implements Database {
 	}
 
 	private boolean dropTable(String string) {
+		int count = 0;
+		File[] files = file.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].getName().contains(string)) {
+				files[i].delete();
+				count++;
+			}
+		}
+		if (count == 2) {
+			return true;
+		}
 		return false;
 	}
 

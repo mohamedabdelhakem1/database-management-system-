@@ -4,10 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import eg.edu.alexu.csd.oop.db.Database;
-import javafx.scene.chart.PieChart.Data;
-
 public class CommandsParser {
+	private int queryNumber = 0;
 	private String tableName;
 	private List<String> columns;
 	private String[] conditons;
@@ -28,6 +26,7 @@ public class CommandsParser {
 			if (strs[1].equalsIgnoreCase("database")) {
 				if (strs.length == 3) {
 					return new String[] { "create", "database", strs[2] };
+					
 				}
 			} else if (strs[1].equalsIgnoreCase("table")) {
 				return strs;

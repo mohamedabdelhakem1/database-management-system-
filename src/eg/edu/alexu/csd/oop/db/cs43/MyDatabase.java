@@ -45,35 +45,32 @@ public class MyDatabase implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		String[] commandWords = commandsParser.validateCommand(query);
-		if (commandWords[0].equalsIgnoreCase("create")) {
-			if (commandWords[1].equalsIgnoreCase("database")) {
-				return file.mkdirs();
-			} else if (commandWords[1].equalsIgnoreCase("table")) {
-				int numOfColumns = (commandWords.length - 3) / 2;
-				String[] columns = new String[numOfColumns];
-				String[] types = new String[numOfColumns];
-				int counter = 0;
-				for (int i = 3; i < commandWords.length; i = i + 2) {
-					columns[counter] = commandWords[i];
-					counter++;
-				}
-				counter = 0;
-				for (int i = 4; i < commandWords.length; i = i + 2) {
-					types[counter] = commandWords[i];
-				}
-				createTable(commandWords[2], columns, types);
-
-				return true;
+		commandsParser.validateCommand(query);
+		int queryNo = commandsParser.getQueryNo();
+		if (queryNo == 4) {
+			System.out.println("createdatabase");
+			return file.mkdirs();
+		} else if (queryNo == 5) {
+			String tablename = commandsParser.getTableName();
+			System.out.println(tablename);
+			String[] columns = commandsParser.getColumns();
+			for(String s : columns) {
+				System.out.println(s);
 			}
-		} else if (commandWords[0].equalsIgnoreCase("drop")) {
-			if (commandWords[1].equalsIgnoreCase("database")) {
-				return file.delete();
-			} else if (commandWords[1].equalsIgnoreCase("table")) {
-				return dropTable(commandWords[2]);
-
+			String[] types = commandsParser.getTypes();
+			for(String s : types) {
+				System.out.println(s);
 			}
+			return createTable(tablename, columns, types);
 
+		} else if (queryNo == 6) 
+		{	System.out.println("deletedatabase");
+			return file.delete();
+		} else if (queryNo == 7) {
+			String tablename = commandsParser.getTableName();
+			System.out.println(tablename);
+			return dropTable(tablename);
+			
 		}
 
 		return false;
@@ -81,45 +78,139 @@ public class MyDatabase implements Database {
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		String[] commandWords = commandsParser.validateCommand(query);
-		String tablename;
-		if (commandWords[0].equalsIgnoreCase("select")) {
-			if (commandWords[1].equalsIgnoreCase("*")) {
-				if (commandWords[2].equalsIgnoreCase("from")) {
-					tablename = commandWords[3];
-					if (commandWords.length == 4) {
-						return SelectColumns(null, null);
-						// return all columns
-					} else if (commandWords[4].equalsIgnoreCase("where")) {
-						String[] conditions = commandsParser.getconditions();
-						return SelectColumns(null, conditions);
-						// return columns with conditions
-					}
+		commandsParser.validateCommand(query);
+		if (commandsParser.getQueryNo() == 15) {
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			
+			String[] conditions = commandsParser.getconditions();
+			System.out.println(tablename);
+			
+			try {
+				for(String s : columns) {
+					System.out.println(s);
 				}
-			} else {
-				String[] columns = commandsParser.getColumns();
-				int i = 1 + columns.length;
-
-				if (commandWords[i].equalsIgnoreCase("from")) {
-					tablename = commandWords[i + 1];
-					if (commandWords.length == i + 2) {
-						return SelectColumns(columns, null);
-						// return Coloumns in columns array
-					} else if (commandWords[i + 2].equalsIgnoreCase("where")) {
-						String[] conditions = commandsParser.getconditions();
-						return SelectColumns(columns, conditions);
-					}
-				}
-
+			} catch (Exception e) {
+				
 			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;
 	}
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		// TODO Auto-generated method stub
+		commandsParser.validateCommand(query);
+		if (commandsParser.getQueryNo() == 1) { // insert
+			
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] values = commandsParser.getValues();
+			insert(tablename, columns, values);
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+		
+			
+		} else if (commandsParser.getQueryNo() == 2) { // update
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] conditions = commandsParser.getconditions();
+			String[] values = commandsParser.getValues();
+			update(tablename, columns, conditions, values);
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+		} else if (commandsParser.getQueryNo() == 3) { // delete
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] conditions = commandsParser.getconditions();
+			String[] values = commandsParser.getValues();
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			delete(tablename, columns, conditions, values);
+		}
+		
 		return 0;
+	}
+
+	private void delete(String tablename, String[] columns, String[] conditions, String[] values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void update(String tablename, String[] columns, String[] conditions, String[] values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void insert(String tablename, String[] columns, String[] values) {
+		// TODO Auto-generated method stub
+
 	}
 
 	private boolean createTable(String string, String[] columns, String[] types) {
@@ -127,7 +218,7 @@ public class MyDatabase implements Database {
 		return false;
 	}
 
-	private Object[][] SelectColumns(String[] columns, String[] conditions) {
+	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
 
 		return null;
 

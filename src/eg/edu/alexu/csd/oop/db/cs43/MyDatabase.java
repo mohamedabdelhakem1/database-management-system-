@@ -48,29 +48,21 @@ public class MyDatabase implements Database {
 		commandsParser.validateCommand(query);
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
-			System.out.println("createdatabase");
+			
 			return file.mkdirs();
 		} else if (queryNo == 5) {
 			String tablename = commandsParser.getTableName();
-			System.out.println(tablename);
 			String[] columns = commandsParser.getColumns();
-			for(String s : columns) {
-				System.out.println(s);
-			}
 			String[] types = commandsParser.getTypes();
-			for(String s : types) {
-				System.out.println(s);
-			}
 			return createTable(tablename, columns, types);
 
-		} else if (queryNo == 6) 
-		{	System.out.println("deletedatabase");
+		} else if (queryNo == 6) {
 			return file.delete();
 		} else if (queryNo == 7) {
 			String tablename = commandsParser.getTableName();
-			System.out.println(tablename);
-			return dropTable(tablename);
 			
+			return dropTable(tablename);
+
 		}
 
 		return false;
@@ -82,25 +74,7 @@ public class MyDatabase implements Database {
 		if (commandsParser.getQueryNo() == 15) {
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
-			
 			String[] conditions = commandsParser.getconditions();
-			System.out.println(tablename);
-			
-			try {
-				for(String s : columns) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
-			try {
-				for(String s : conditions) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
 			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;
@@ -110,91 +84,27 @@ public class MyDatabase implements Database {
 	public int executeUpdateQuery(String query) throws SQLException {
 		commandsParser.validateCommand(query);
 		if (commandsParser.getQueryNo() == 1) { // insert
-			
+
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] values = commandsParser.getValues();
 			insert(tablename, columns, values);
-			System.out.println(tablename);
-			try {
-				for(String s : columns) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			try {
-				for(String s : values) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
-		
-			
+
 		} else if (commandsParser.getQueryNo() == 2) { // update
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 			update(tablename, columns, conditions, values);
-			System.out.println(tablename);
-			try {
-				for(String s : columns) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			try {
-				for(String s : values) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
-			try {
-				for(String s : conditions) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
+
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
-			System.out.println(tablename);
-			try {
-				for(String s : columns) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			try {
-				for(String s : values) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
-			try {
-				for(String s : conditions) {
-					System.out.println(s);
-				}
-			} catch (Exception e) {
-				
-			}
-			
 			delete(tablename, columns, conditions, values);
 		}
-		
+
 		return 0;
 	}
 

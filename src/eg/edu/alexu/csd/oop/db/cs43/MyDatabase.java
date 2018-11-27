@@ -8,7 +8,7 @@ import eg.edu.alexu.csd.oop.db.Database;
 
 public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
-	private File file;
+	private File dataBaseFile;
 	private static Database database = null;
 
 	private MyDatabase() {
@@ -25,10 +25,12 @@ public class MyDatabase implements Database {
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		file = new File(databaseName);
+		dataBaseFile = new File(databaseName);
+
 		if (dropIfExists) {
 			try {
 				executeStructureQuery("drop database " + databaseName);
+			
 			} catch (SQLException e) {
 
 			}
@@ -36,35 +38,48 @@ public class MyDatabase implements Database {
 		try {
 			executeStructureQuery("create database " + databaseName);
 		} catch (SQLException e) {
-
+			
 		}
-
-		return file.getAbsolutePath();
+		return dataBaseFile.getAbsolutePath();
 
 	}
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
+		ExecuteStructureQuerys executeStructureQuerys = new ExecuteStructureQuerys();
+		executeStructureQuerys.setDataBaseFile(dataBaseFile);
+
 		commandsParser.validateCommand(query);
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
-			
-			return file.mkdirs();
-		} else if (queryNo == 5) {
-			String tablename = commandsParser.getTableName();
-			String[] columns = commandsParser.getColumns();
-			String[] types = commandsParser.getTypes();
-			return createTable(tablename, columns, types);
 
+	
+
+
+			return executeStructureQuerys.createDataBase();
+
+
+		} else if (queryNo == 5) {
+
+	
+			executeStructureQuerys.setTableName(commandsParser.getTableName());
+			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
+			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
+
+
+			try {
+				return executeStructureQuerys.createTable();
+			} catch (Exception e) {
+			}
 		} else if (queryNo == 6) {
-			return file.delete();
+			return executeStructureQuerys.dropDataBase();
 		} else if (queryNo == 7) {
-			String tablename = commandsParser.getTableName();
-			
-			return dropTable(tablename);
+
+			executeStructureQuerys.setTableName(commandsParser.getTableName());
+			return executeStructureQuerys.dropTable();
+
 
 		}
-
 		return false;
 	}
 
@@ -74,7 +89,10 @@ public class MyDatabase implements Database {
 		if (commandsParser.getQueryNo() == 15) {
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
+
+
 			String[] conditions = commandsParser.getconditions();
+
 			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;
@@ -82,6 +100,7 @@ public class MyDatabase implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
+
 		commandsParser.validateCommand(query);
 		if (commandsParser.getQueryNo() == 1) { // insert
 
@@ -90,6 +109,7 @@ public class MyDatabase implements Database {
 			String[] values = commandsParser.getValues();
 			insert(tablename, columns, values);
 
+
 		} else if (commandsParser.getQueryNo() == 2) { // update
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
@@ -97,11 +117,14 @@ public class MyDatabase implements Database {
 			String[] values = commandsParser.getValues();
 			update(tablename, columns, conditions, values);
 
+
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
+
+
 			delete(tablename, columns, conditions, values);
 		}
 
@@ -123,10 +146,6 @@ public class MyDatabase implements Database {
 
 	}
 
-	private boolean createTable(String string, String[] columns, String[] types) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
 
@@ -136,7 +155,7 @@ public class MyDatabase implements Database {
 
 	private boolean dropTable(String string) {
 		int count = 0;
-		File[] files = file.listFiles();
+		File[] files = dataBaseFile.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().contains(string)) {
 				files[i].delete();

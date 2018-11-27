@@ -9,6 +9,7 @@ public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
 	private File file;
 	private static Database database = null;
+	private String currentDataBase = null;
 
 	private MyDatabase() {
 		commandsParser = new CommandsParser();
@@ -25,6 +26,7 @@ public class MyDatabase implements Database {
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
 		file = new File(databaseName);
+		
 
 		if (dropIfExists) {
 			try {
@@ -63,7 +65,13 @@ public class MyDatabase implements Database {
 				for (int i = 4; i < commandWords.length; i = i + 2) {
 					types[counter] = commandWords[i];
 				}
-				createTable(commandWords[2], columns, types);
+				
+				try {
+					createTable(commandWords[2], columns, types);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				return true;
 			}
@@ -119,13 +127,14 @@ public class MyDatabase implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
-	private boolean createTable(String string, String[] columns, String[] types) {
-		// TODO Auto-generated method stub
-		return false;
+	private boolean createTable(String tableName, String[] columns, String[] types) throws Exception {
+		 createTable obj = new createTable(tableName, columns, types, file.getAbsolutePath());
+		 return obj.creatMytable();
+	
 	}
 
 	private Object[][] SelectColumns(String[] columns, String[] conditions) {

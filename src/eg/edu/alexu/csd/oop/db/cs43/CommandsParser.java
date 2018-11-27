@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import eg.edu.alexu.csd.oop.db.Database;
-import javafx.scene.chart.PieChart.Data;
+
 
 public class CommandsParser {
 	private String tableName;

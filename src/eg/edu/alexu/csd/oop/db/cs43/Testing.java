@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses.ClientCommand;
-import eg.edu.alexu.csd.oop.db.cs43.interfaces.CommandFactory;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.CommandFactory;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
 
 public class Testing {
 

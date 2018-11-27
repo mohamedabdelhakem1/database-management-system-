@@ -3,8 +3,8 @@ package eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
-import eg.edu.alexu.csd.oop.db.cs43.interfaces.Command;
-import eg.edu.alexu.csd.oop.db.cs43.interfaces.CommandFactory;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.Command;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.CommandFactory;
 
 public class ClientCommand implements CommandFactory {
 	private String command;

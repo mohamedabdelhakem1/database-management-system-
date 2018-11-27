@@ -1,17 +1,19 @@
-package eg.edu.alexu.csd.oop.db.cs43;
+package eg.edu.alexu.csd.oop.db.cs43.concreteclass;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.List;
+
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
+import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
 
 public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
 	private File dataBaseFile;
 	private static Database database = null;
 
-	private MyDatabase() {
+	public MyDatabase() {
 		commandsParser = new CommandsParser();
 	}
 
@@ -153,7 +155,7 @@ public class MyDatabase implements Database {
 		return null;
 
 	}
-
+/*
 	private boolean dropTable(String string) {
 		int count = 0;
 		File[] files = dataBaseFile.listFiles();
@@ -168,5 +170,5 @@ public class MyDatabase implements Database {
 		}
 		return false;
 	}
-
+*/
 }

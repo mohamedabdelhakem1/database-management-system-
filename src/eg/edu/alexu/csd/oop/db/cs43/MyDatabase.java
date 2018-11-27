@@ -30,12 +30,15 @@ public class MyDatabase implements Database {
 		if (dropIfExists) {
 			try {
 				executeStructureQuery("drop database " + databaseName);
-				executeStructureQuery("create database " + databaseName);
 			} catch (SQLException e) {
 
 			}
 		}
-
+		try {
+			executeStructureQuery("create database " + databaseName);
+		} catch (SQLException e) {
+			
+		}
 		return dataBaseFile.getAbsolutePath();
 
 	}

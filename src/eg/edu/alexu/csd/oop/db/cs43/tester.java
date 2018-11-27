@@ -22,10 +22,17 @@ public class tester {
 	private final static String NS_PREFIX = "xs:";
 
 	public static void main(String[] args) {
-		XmlValidation executeUpdateQuery = new XmlValidation();
-		File file = new File(
-				"sample" + System.getProperty("file.separator") + "TestDB" + System.getProperty("file.separator")+"table_name1");
-		executeUpdateQuery.validateXml(file);
+		ReadXml readXml  = new ReadXml();
+		WriteXml writeXml = new WriteXml();
+		File file = new File("table_name1.xml");
+		try {
+			Object [][] s= readXml.getArray(file);
+			
+			writeXml.writeTable(s, new String[]{"col1","col2","col3"}, new File("dd") );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

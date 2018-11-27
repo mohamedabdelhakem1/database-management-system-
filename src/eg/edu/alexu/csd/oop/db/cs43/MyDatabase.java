@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs43;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 
 import eg.edu.alexu.csd.oop.db.Database;
 
@@ -14,7 +15,7 @@ public class MyDatabase implements Database {
 	private MyDatabase() {
 		commandsParser = new CommandsParser();
 	}
-	
+
 	public static Database getInstance() {
 		if (database == null) {
 			database = new MyDatabase();
@@ -26,7 +27,6 @@ public class MyDatabase implements Database {
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
 		file = new File(databaseName);
-		
 
 		if (dropIfExists) {
 			try {
@@ -47,41 +47,23 @@ public class MyDatabase implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		String[] commandWords = commandsParser.validateCommand(query);
+		commandsParser.validateCommand(query);
+		int queryNo = commandsParser.getQueryNo();
+		if (queryNo == 4) {
+			
+			return file.mkdirs();
+		} else if (queryNo == 5) {
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] types = commandsParser.getTypes();
+			return createTable(tablename, columns, types);
 
-		if (commandWords[0].equalsIgnoreCase("create")) {
-			if (commandWords[1].equalsIgnoreCase("database")) {
-				return file.mkdirs();
-			} else if (commandWords[1].equalsIgnoreCase("table")) {
-				int numOfColumns = (commandWords.length - 3) / 2;
-				String[] columns = new String[numOfColumns];
-				String[] types = new String[numOfColumns];
-				int counter = 0;
-				for (int i = 3; i < commandWords.length; i = i + 2) {
-					columns[counter] = commandWords[i];
-					counter++;
-				}
-				counter = 0;
-				for (int i = 4; i < commandWords.length; i = i + 2) {
-					types[counter] = commandWords[i];
-				}
-				
-				try {
-					createTable(commandWords[2], columns, types);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				return true;
-			}
-		} else if (commandWords[0].equalsIgnoreCase("drop")) {
-			if (commandWords[1].equalsIgnoreCase("database")) {
-				return file.delete();
-			} else if (commandWords[1].equalsIgnoreCase("table")) {
-				dropTable(commandWords[2]);
-				return true;
-			}
+		} else if (queryNo == 6) {
+			return file.delete();
+		} else if (queryNo == 7) {
+			String tablename = commandsParser.getTableName();
+			
+			return dropTable(tablename);
 
 		}
 
@@ -90,60 +72,166 @@ public class MyDatabase implements Database {
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		String[] commandWords = commandsParser.validateCommand(query);
-		String tablename;
-		if (commandWords[0].equalsIgnoreCase("select")) {
-			if (commandWords[1].equalsIgnoreCase("*")) {
-				if (commandWords[2].equalsIgnoreCase("from")) {
-					tablename = commandWords[3];
-					if (commandWords.length == 4) {
-						return SelectColumns(null, null);
-						// return all columns
-					} else if (commandWords[4].equalsIgnoreCase("where")) {
-						String[] conditions = commandsParser.getconditions();
-						return SelectColumns(null, conditions);
-						// return columns with conditions
-					}
+		commandsParser.validateCommand(query);
+		if (commandsParser.getQueryNo() == 15) {
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			
+			String[] conditions = commandsParser.getconditions();
+			System.out.println(tablename);
+			
+			try {
+				for(String s : columns) {
+					System.out.println(s);
 				}
-			} else {
-				String[] columns = commandsParser.getColumns();
-				int i = 1 + columns.length;
-
-				if (commandWords[i].equalsIgnoreCase("from")) {
-					tablename = commandWords[i + 1];
-					if (commandWords.length == i + 2) {
-						return SelectColumns(columns, null);
-						// return Coloumns in columns array
-					} else if (commandWords[i + 2].equalsIgnoreCase("where")) {
-						String[] conditions = commandsParser.getconditions();
-						return SelectColumns(columns, conditions);
-					}
-				}
-
+			} catch (Exception e) {
+				
 			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;
 	}
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
+
+		commandsParser.validateCommand(query);
+		if (commandsParser.getQueryNo() == 1) { // insert
+			
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] values = commandsParser.getValues();
+			insert(tablename, columns, values);
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+		
+			
+		} else if (commandsParser.getQueryNo() == 2) { // update
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] conditions = commandsParser.getconditions();
+			String[] values = commandsParser.getValues();
+			update(tablename, columns, conditions, values);
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+		} else if (commandsParser.getQueryNo() == 3) { // delete
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] conditions = commandsParser.getconditions();
+			String[] values = commandsParser.getValues();
+			System.out.println(tablename);
+			try {
+				for(String s : columns) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			try {
+				for(String s : values) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			try {
+				for(String s : conditions) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			delete(tablename, columns, conditions, values);
+		}
+
 		
 		return 0;
 	}
 
-	private boolean createTable(String tableName, String[] columns, String[] types) throws Exception {
-		 createTable obj = new createTable(tableName, columns, types, file.getAbsolutePath());
-		 return obj.creatMytable();
-	
+	private void delete(String tablename, String[] columns, String[] conditions, String[] values) {
+		// TODO Auto-generated method stub
+
 	}
 
-	private Object[][] SelectColumns(String[] columns, String[] conditions) {
+	private void update(String tablename, String[] columns, String[] conditions, String[] values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void insert(String tablename, String[] columns, String[] values) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private boolean createTable(String string, String[] columns, String[] types) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
 
 		return null;
 
 	}
 
 	private boolean dropTable(String string) {
+		int count = 0;
+		File[] files = file.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].getName().contains(string)) {
+				files[i].delete();
+				count++;
+			}
+		}
+		if (count == 2) {
+			return true;
+		}
 		return false;
 	}
 

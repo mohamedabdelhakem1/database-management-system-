@@ -32,16 +32,12 @@ public class MyDatabase implements Database {
 		if (dropIfExists) {
 			try {
 				executeStructureQuery("drop database " + databaseName);
-
-
 			} catch (SQLException e) {
-
 			}
 		}
 		try {
 			executeStructureQuery("create database " + databaseName);
 		} catch (SQLException e) {
-			
 		}
 		return dataBaseFile.getAbsolutePath();
 
@@ -51,26 +47,18 @@ public class MyDatabase implements Database {
 	public boolean executeStructureQuery(String query) throws SQLException {
 		ExecuteStructureQuerys executeStructureQuerys = new ExecuteStructureQuerys();
 		executeStructureQuerys.setDataBaseFile(dataBaseFile);
-
 		commandsParser.validateCommand(query);
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
-
-
 			return executeStructureQuerys.createDataBase();
-
-
 		} else if (queryNo == 5) {
-
-	
 			executeStructureQuerys.setTableName(commandsParser.getTableName());
 			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
 			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] types = commandsParser.getTypes();
-		
-
+	
 			try {
 				return executeStructureQuerys.createTable();
 			} catch (Exception e) {
@@ -78,11 +66,8 @@ public class MyDatabase implements Database {
 		} else if (queryNo == 6) {
 			return executeStructureQuerys.dropDataBase();
 		} else if (queryNo == 7) {
-
 			executeStructureQuerys.setTableName(commandsParser.getTableName());
 			return executeStructureQuerys.dropTable();
-
-
 		}
 		return false;
 	}
@@ -95,7 +80,6 @@ public class MyDatabase implements Database {
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			
-
 			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;

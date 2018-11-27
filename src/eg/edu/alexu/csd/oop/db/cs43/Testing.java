@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import javax.xml.XMLConstants;
+
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses.ClientCommand;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.CommandFactory;
@@ -12,9 +14,9 @@ import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
 public class Testing {
 
 	public static void main(String[] args) {
+		
 	Database  database = MyDatabase.getInstance();
-	String s =  "UPDATE table_name2 SET column_name1='11111111', COLUMN_NAME2=22222222, column_name3 ='333333333' WHERE coLUmn_NAME2=4";
-			try {
+	String s = "INSERT INTO * table_name2(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)";	try {
 		database.executeUpdateQuery(s);
 		
 	} catch (SQLException e) {

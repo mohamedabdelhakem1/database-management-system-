@@ -1,27 +1,31 @@
 package eg.edu.alexu.csd.oop.db.cs43;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.XMLConstants;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class tester {
+
+	private final static String NS_PREFIX = "xs:";
+
 	public static void main(String[] args) {
-		String subjectString = "This is a string that \"will be\" highlighted when your 'regular expression' matches something.";
-		List<String> matchList = new ArrayList<String>();
-		Pattern regex = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
-		Matcher regexMatcher = regex.matcher(subjectString);
-		while (regexMatcher.find()) {
-		    if (regexMatcher.group(1) != null) {
-		        // Add double-quoted string without the quotes
-		       System.out.println(regexMatcher.group(1));
-		    } else if (regexMatcher.group(2) != null) {
-		        // Add single-quoted string without the quotes
-		    	 System.out.println(regexMatcher.group(2));
-		    } else {
-		        // Add unquoted word
-		    	 System.out.println(regexMatcher.group());
-		    }
-		} 
+		XmlValidation executeUpdateQuery = new XmlValidation();
+		File file = new File(
+				"sample" + System.getProperty("file.separator") + "TestDB" + System.getProperty("file.separator")+"table_name1");
+		executeUpdateQuery.validateXml(file);
 	}
+
 }

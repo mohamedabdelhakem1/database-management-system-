@@ -56,8 +56,6 @@ public class MyDatabase implements Database {
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
 
-	
-
 
 			return executeStructureQuerys.createDataBase();
 
@@ -68,7 +66,10 @@ public class MyDatabase implements Database {
 			executeStructureQuerys.setTableName(commandsParser.getTableName());
 			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
 			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
-
+			String tablename = commandsParser.getTableName();
+			String[] columns = commandsParser.getColumns();
+			String[] types = commandsParser.getTypes();
+		
 
 			try {
 				return executeStructureQuerys.createTable();
@@ -92,9 +93,8 @@ public class MyDatabase implements Database {
 		if (commandsParser.getQueryNo() == 15) {
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
-
-
 			String[] conditions = commandsParser.getconditions();
+			
 
 			return SelectColumns(tablename, columns, conditions);
 		}
@@ -111,6 +111,7 @@ public class MyDatabase implements Database {
 			String[] columns = commandsParser.getColumns();
 			String[] values = commandsParser.getValues();
 			insert(tablename, columns, values);
+			
 
 
 		} else if (commandsParser.getQueryNo() == 2) { // update
@@ -119,13 +120,13 @@ public class MyDatabase implements Database {
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 			update(tablename, columns, conditions, values);
-
-
+			
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
+			
 
 
 			delete(tablename, columns, conditions, values);

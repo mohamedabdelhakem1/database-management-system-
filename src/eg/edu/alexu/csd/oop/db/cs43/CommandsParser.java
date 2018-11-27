@@ -23,8 +23,9 @@ public class CommandsParser {
 	}
 
 	public String[] validateCommand(String command) {
-		
-		String pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
+		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
+	    String pattern ="((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)"; 
+		//String pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
 
@@ -109,47 +110,28 @@ public class CommandsParser {
 			tableName = strs[1];
 			if (strs[2].equalsIgnoreCase("set")) {
 				//
-				String consAndValsAndCols = command.split("(?i)set")[1].trim();
-				String ValsAndCols = consAndValsAndCols.split("(?i)where")[0].trim();
-				String conds = consAndValsAndCols.split("(?i)where")[1].trim();
-				String [] valuesAndCol =  ValsAndCols.split("");
-				//
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				//
 				columns = new LinkedList<String>();
 				values = new LinkedList<String>();
 				boolean where = true;
 				for (int i = 3; i < strs.length && !strs[i].equalsIgnoreCase("where"); i = i + 2) {
 					if(strs[i].equalsIgnoreCase("where")||strs[i+1].equalsIgnoreCase("where")) {
 						where = false;
+						columns = null;
+						values =null;
 						break;
 					}
 					columns.add(strs[i]);
 					values.add(strs[i + 1]);
 					Queryno = 2;
-					conditons = null;
+					
 				}
-
+				conditons = null;
 				if (3 + 2 * columns.size() < strs.length && strs[3 + 2 * columns.size()].equalsIgnoreCase("where")) {
 
-					String allConditions = command.split("(?i)where")[1];
-					allConditions = allConditions.replaceAll("<", " < ");
-					allConditions = allConditions.replaceAll("=", " = ");
-					allConditions = allConditions.replaceAll(">", " > ");
+					String allConditions = command.split("(?i)where")[1].trim();
+					allConditions = allConditions.replaceAll("(\\s*([<]{1,})\\s*)", " < ");
+					allConditions = allConditions.replaceAll("(\\s*([=]{1,})\\s*)", " = ");
+					allConditions = allConditions.replaceAll("(\\s*([>]{1,})\\s*)", " > ");
 					conditons = allConditions.split("\\s+");
 					Queryno = 2;
 				}
@@ -166,10 +148,10 @@ public class CommandsParser {
 			if (strs[1].equalsIgnoreCase("from")) {
 				tableName = strs[2];
 				if (3 < strs.length && strs[3].equalsIgnoreCase("where")) {
-					String allConditions = command.split("(?i)where")[1];
-					allConditions = allConditions.replaceAll("<", " < ");
-					allConditions = allConditions.replaceAll("=", " = ");
-					allConditions = allConditions.replaceAll(">", " > ");
+					String allConditions = command.split("(?i)where")[1].trim();
+					allConditions = allConditions.replaceAll("(\\s*([<]{1,})\\s*)", " < ");
+					allConditions = allConditions.replaceAll("(\\s*([=]{1,})\\s*)", " = ");
+					allConditions = allConditions.replaceAll("(\\s*([>]{1,})\\s*)", " > ");
 					conditons = allConditions.split("\\s+");
 					Queryno = 3;
 				}
@@ -185,10 +167,10 @@ public class CommandsParser {
 							Queryno = 15;
 						} else if (strs[4].equalsIgnoreCase("where")) {
 							columns = null;
-							String allConditions = command.split("(?i)where")[1];
-							allConditions = allConditions.replaceAll("<", " < ");
-							allConditions = allConditions.replaceAll("=", " = ");
-							allConditions = allConditions.replaceAll(">", " > ");
+							String allConditions = command.split("(?i)where")[1].trim();
+							allConditions = allConditions.replaceAll("(\\s*([<]{1,})\\s*)", " < ");
+							allConditions = allConditions.replaceAll("(\\s*([=]{1,})\\s*)", " = ");
+							allConditions = allConditions.replaceAll("(\\s*([>]{1,})\\s*)", " > ");
 							conditons = allConditions.split("\\s+");
 							Queryno = 15;
 						}
@@ -209,10 +191,10 @@ public class CommandsParser {
 								Queryno = 15;
 								// return columns in array
 							} else if (strs[i + 2].equalsIgnoreCase("where")) {
-								String allConditions = command.split("(?i)where")[1];
-								allConditions = allConditions.replaceAll("<", " < ");
-								allConditions = allConditions.replaceAll("=", " = ");
-								allConditions = allConditions.replaceAll(">", " > ");
+								String allConditions = command.split("(?i)where")[1].trim();
+								allConditions = allConditions.replaceAll("(\\s*([<]{1,})\\s*)", " < ");
+								allConditions = allConditions.replaceAll("(\\s*([=]{1,})\\s*)", " = ");
+								allConditions = allConditions.replaceAll("(\\s*([>]{1,})\\s*)", " > ");
 								conditons = allConditions.split("\\s+");
 								Queryno = 15;
 

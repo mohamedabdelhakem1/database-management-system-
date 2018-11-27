@@ -16,7 +16,7 @@ public class TEst {
 	public static void main(String[] args) {
 
 		
-		String s ="UPDATE table_name2 SET * column_name1='111  11111', COLUMN_NAME2   =    22222222, column_name3    =  '333333333' WHERE coLUmn_NAME2=4";
+		String s ="UPDATE table_name2 SET column_name1='11111111', COLUMN_NAME2=22222222, column_name3     ='333333333' WHERE coLUmn_NAME2=4";;
 		String s1 ="CREATE TABLE table_name1(column_name1 varchar, column_name2 int, column_name3 varchar)";
 		String s2 = "column_name1='11111111' COLUMN_NAME2=10  column_name3='333333333' ";
 				String s3 = "UPDATE table_name1 SET column_name1='111    11111'   ,    COLUMN_NAME2=22222222, column_name3='3333       33333' WHERE coLUmn_NAME3='VALUE       3'";

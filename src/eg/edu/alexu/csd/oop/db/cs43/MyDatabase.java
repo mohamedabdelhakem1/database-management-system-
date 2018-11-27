@@ -30,7 +30,8 @@ public class MyDatabase implements Database {
 		if (dropIfExists) {
 			try {
 				executeStructureQuery("drop database " + databaseName);
-			
+
+
 			} catch (SQLException e) {
 
 			}

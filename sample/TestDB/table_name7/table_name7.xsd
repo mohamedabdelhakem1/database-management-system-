@@ -6,9 +6,9 @@
                 <xs:element maxOccurs="unbounded" name="row">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="column_name1" type="xs:'string'"/>
+                            <xs:element name="column_name1" type="xs:string"/>
                             <xs:element name="column_name2" type="xs:integer"/>
-                            <xs:element name="column_name3" type="xs:'string'"/>
+                            <xs:element name="column_name3" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

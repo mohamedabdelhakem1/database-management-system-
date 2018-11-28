@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
+import eg.edu.alexu.csd.oop.db.cs43.ExecuteUpdateQuery;
 
 public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
@@ -87,14 +88,19 @@ public class MyDatabase implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
+	
 
 		commandsParser.validateCommand(query);
+		ExecuteUpdateQuery executeUpdateQuery = new ExecuteUpdateQuery();
+		
 		if (commandsParser.getQueryNo() == 1) { // insert
-
-			String tablename = commandsParser.getTableName();
-			String[] columns = commandsParser.getColumns();
-			String[] values = commandsParser.getValues();
-			insert(tablename, columns, values);
+			
+			executeUpdateQuery.setDataBaseFile(dataBaseFile);
+			executeUpdateQuery.setTableName(commandsParser.getTableName());
+			executeUpdateQuery.setColumnsNames(commandsParser.getColumns());
+			executeUpdateQuery.setColumnsTypes(commandsParser.getValues());
+			executeUpdateQuery.insertData();
+			
 			
 
 
@@ -111,8 +117,6 @@ public class MyDatabase implements Database {
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 			
-
-
 			delete(tablename, columns, conditions, values);
 		}
 

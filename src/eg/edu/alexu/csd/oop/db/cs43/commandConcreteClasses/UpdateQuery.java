@@ -6,10 +6,10 @@ import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.Command;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
 
-public class Update implements Command {
+public class UpdateQuery implements Command {
 	Database database;
 	
-	public Update() {
+	public UpdateQuery() {
 		database = MyDatabase.getInstance();
 	}
 	@Override

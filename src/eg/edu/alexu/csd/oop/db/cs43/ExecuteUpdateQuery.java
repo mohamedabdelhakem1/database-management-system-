@@ -6,9 +6,11 @@ import java.util.concurrent.ExecutionException;
 
 import org.xml.sax.XMLReader;
 
-public class ExecuteUpdateQuery {
-	private File DataBaseFile;
+
+public class ExecuteUpdateQuery  {
+	private File DataBaseFile; 
 	private String tableName;
+	
 	private String[] columnsNames;
 	private String[] columnsTypes;
 	private String[] columnsValues;
@@ -34,26 +36,29 @@ public class ExecuteUpdateQuery {
 	}
 
 	public int insertData() throws SQLException, Exception {
-
+		
 		File tablefolder = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
 		if (!tablefolder.exists()) {
 			// table isn't exist in database
+			
 			throw new SQLException();
 		}
 
 		XSDReader xsdReader = new XSDReader();
-		xsdReader.ReadXSD(DataBaseFile.getName() + System.getProperty("file.separator") + tableName
+		xsdReader.ReadXSD(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName
 				+ System.getProperty("file.separator") + tableName + ".xsd");
-
+		
 		String[] tableColumnsNames = xsdReader.getColumns();
-
-
+		
 		ReadXml readXml = new ReadXml();
-		File tableXmlFile = new File(DataBaseFile.getName() + System.getProperty("file.separator") + tableName
+		File tableXmlFile = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName
 				+ System.getProperty("file.separator") + tableName + ".xml");
 
 		Object[][] xmlData = readXml.getArray(tableXmlFile);
-		if(xmlData == null)System.out.println("shiiiiiiiiiiit");
+		
+		if(xmlData == null) {
+			xmlData = new Object[0][0];
+		}
 		Object[][] newXmlData = CopyOldXmlInNewXml(xmlData, columnsNames.length);
 
 		if (tableColumnsNames.length != columnsNames.length) {
@@ -65,7 +70,7 @@ public class ExecuteUpdateQuery {
 			if( index == -1 ) {// query has column name does not exist
 				throw new SQLException();
 			}
-			newXmlData[xmlData.length][i] = columnsNames[index];
+			newXmlData[xmlData.length][i] = columnsValues[index];
 		}
 		WriteXml writeXml = new WriteXml();
 		writeXml.writeTable(newXmlData, tableColumnsNames, tablefolder);
@@ -74,13 +79,11 @@ public class ExecuteUpdateQuery {
 			validation.validateXml(tablefolder);
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
+			writeXml.writeTable(xmlData, tableColumnsNames, tablefolder);
 		}
 		
-		
-		
-
-		return 0;
+		return 1;
 	}
 	private Object[][] CopyOldXmlInNewXml(Object[][] arr, int columnsNumber) {
 		Object[][] newXml= null;
@@ -94,6 +97,7 @@ public class ExecuteUpdateQuery {
 		}
 	}
 	else {
+		
 		 newXml = new Object[1][columnsNumber];
 	}
 		return newXml;
@@ -103,12 +107,10 @@ public class ExecuteUpdateQuery {
 	private int getIndex(String name, String columnsNames[]) {
 
 		for (int i = 0; i < columnsNames.length; ++i) {
-			if(name == columnsNames[i]) {
+			if(name.equalsIgnoreCase(columnsNames[i])) {
 				return i;
 			}
 		}
-
 		return -1;
-
 	}
 }

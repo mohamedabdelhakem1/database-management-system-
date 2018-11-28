@@ -14,16 +14,19 @@ import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
 public class Testing {
 
 	public static void main(String[] args) {
-	
-	Database  database = MyDatabase.getInstance();
-	String s = "INSERT INTO * table_name2(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)";	try {
-		database.executeUpdateQuery(s);
-		
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-		
-	
+
+		Database database = MyDatabase.getInstance();
+		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
+				, false);
+
+		String s = "INSERT INTO  table_name1(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)";
+		try {
+			database.executeUpdateQuery(s);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

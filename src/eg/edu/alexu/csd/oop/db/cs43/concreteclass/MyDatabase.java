@@ -105,8 +105,10 @@ public class MyDatabase implements Database {
 			executeUpdateQuery.setColumnsNames(commandsParser.getColumns());
 			executeUpdateQuery.setColumnsValues(commandsParser.getValues());
 			try {
-				executeUpdateQuery.insertData();
+		return	executeUpdateQuery.insertData();
+				
 			} catch (Exception e) {
+			
 				e.printStackTrace();
 				throw new SQLException();
 			}
@@ -120,7 +122,7 @@ public class MyDatabase implements Database {
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
-			return update(dataBaseFile, columns, conditions, values);
+			return update(dataBaseFile, columns, conditions, values,tablename.toLowerCase());
 		
 
 		} else if (commandsParser.getQueryNo() == 3) { // delete
@@ -143,8 +145,8 @@ public class MyDatabase implements Database {
 
 	}
 
-	private int update(File tableFolder, String[] columns, String[] conditions, String[] values) {
-		Update update = new Update(tableFolder, columns, conditions, values);
+	private int update(File tableFolder, String[] columns, String[] conditions, String[] values,String tablename) {
+		Update update = new Update(tableFolder, columns, conditions, values,tablename);
 		return update.execute();
 	}
 

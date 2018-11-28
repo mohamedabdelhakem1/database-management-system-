@@ -24,21 +24,23 @@ public class Update implements ExecuteUpdateQuery {
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
 
-	public Update(File tableFolder, String[] columns, String[] conditions, String[] values) {
+	public Update(File tableFolder, String[] columns, String[] conditions, String[] values, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
 		this.tableFolder = tableFolder;
+
 		this.values = values;
 		readXml = new ReadXml();
 		try {
-			Storedvalues = readXml.getArray(new File(tableFolder.getAbsolutePath()
-					+ System.getProperty("file.separator") + tableFolder.getName() + ".xml"));
+			Storedvalues = readXml
+					.getArray(new File(tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tablename
+							+ System.getProperty("file.separator") + tablename + ".xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		reader = new XSDReader();
-		reader.ReadXSD(
-				tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tableFolder.getName() + ".xsd");
+		reader.ReadXSD(tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tablename
+				+ System.getProperty("file.separator") + tablename + ".xsd");
 		allcolumns = reader.getColumns();
 		allTypes = reader.getTypes();
 
@@ -78,10 +80,13 @@ public class Update implements ExecuteUpdateQuery {
 			manipulation = new ConditionsManipulation(Storedvalues, conditions, allcolumns, allTypes);
 			Object[][] RowsTobeAffected = new Object[0][0];
 			try {
+				
 				RowsTobeAffected = manipulation.getArrayAfterCondiotions();
+			
 			} catch (Exception e) {
 			}
 			int countAffectedRows = 0;
+			
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int count = 0;
 				for (int k = 0; k < RowsTobeAffected.length; k++) {
@@ -89,7 +94,6 @@ public class Update implements ExecuteUpdateQuery {
 					for (int j = 0; j < Storedvalues[0].length; j++) {
 						if (RowsTobeAffected[k][j].equals(Storedvalues[i][j])) {
 							count++;
-
 						}
 					}
 					if (count == Storedvalues[0].length) {

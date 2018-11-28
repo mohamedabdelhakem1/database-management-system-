@@ -37,14 +37,15 @@ public class ConditionsManipulation {
 			boolean secondOPerandINlogic = false;
 			boolean foundOperation = false;
 			for (int j = 0; j < conditions.length; j++) {
-
+				
 				String operand = conditions[j];
 				String operation = conditions[j + 1];
 				String value = conditions[j + 2];
-				// System.out.println(operand);
-				// System.out.println(operation);
-				// System.out.println(value);
+			//	 System.out.println(operand);
+			//	 System.out.println(operation);
+			//	 System.out.println(value);
 				if (operation.equals("=") || operation.equals("<") || operation.equals(">")) {
+					
 					foundOperation = true;
 					// check if there is a column with this name or not if not throw exception
 					int index = getIndexOfcolumn(operand);
@@ -76,9 +77,9 @@ public class ConditionsManipulation {
 					// now comparing the values
 
 					if (operation.equals("=")) {
-
+						System.out.println("ss");
 						if (currenttype.equals("string")) {
-							if (ComparedString.equals(String.valueOf(map.get(allcolumns[index])))) {
+							if (ComparedString.equalsIgnoreCase(String.valueOf(map.get(allcolumns[index])))) {
 								addThisRowOrnot = true;
 							} else {
 								addThisRowOrnot = false;
@@ -122,9 +123,10 @@ public class ConditionsManipulation {
 						}
 					}
 					j = j + 2;
+					
 				}
 				if (operand.equalsIgnoreCase("not") || FoundNot == 1) {
-					// System.out.println("not");
+					 System.out.println("not");
 					if (FoundNot == 1) {
 						FoundNot = 0;
 						addThisRowOrnot = !addThisRowOrnot;

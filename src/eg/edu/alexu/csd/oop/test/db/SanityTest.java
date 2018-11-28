@@ -140,7 +140,6 @@ public class SanityTest {
 			Assert.assertNotEquals("Insert returned zero rows", 0, count2);
 			int count3 = db.executeUpdateQuery("INSERT INTO table_name1(column_name1, COLUMN_NAME3, column_NAME2) VALUES ('value2', 'value4', 5)");
 			Assert.assertNotEquals("Insert returned zero rows", 0, count3);
-
 			boolean created2 = db.executeStructureQuery("DROP TABLE table_name1");
 			Assert.assertEquals("Failed to drop table", true, created2);
 		} catch (Throwable e){

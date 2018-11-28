@@ -25,19 +25,18 @@ public class tester {
 
 
 
-	public static void main(String[] args) {
-		
-		Database obj = new MyDatabase();
-		obj.createDatabase("testDB", true);
-		
-		try {
-			obj.executeStructureQuery("Create TABLE table_name1(column_name1 varchar, column_name2 int, column_name3 varchar)");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	public static void main(String[] args) throws SQLException {
+		Database database = MyDatabase.getInstance();
+		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
+				+ System.getProperty("file.separator") + "table_name1", false);
+		Object[][] els = database.executeQuery("select column_name1 . column_name2 from table_name1");
+		for (int i = 0; i < els.length; i++) {
+			for (int j = 0, c = 0; j < els[0].length; j++) {
+				System.out.println(els[i][j]);
+			}
 		}
-		
-		
+
 	}
 
 }

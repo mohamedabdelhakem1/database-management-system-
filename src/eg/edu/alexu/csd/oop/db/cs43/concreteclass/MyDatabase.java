@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
+import eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteUpdateQuery;
 
@@ -98,8 +99,13 @@ public class MyDatabase implements Database {
 			executeUpdateQuery.setDataBaseFile(dataBaseFile);
 			executeUpdateQuery.setTableName(commandsParser.getTableName());
 			executeUpdateQuery.setColumnsNames(commandsParser.getColumns());
-			executeUpdateQuery.setColumnsTypes(commandsParser.getValues());
-			executeUpdateQuery.insertData();
+			executeUpdateQuery.setColumnsValues(commandsParser.getValues());
+			try {
+				executeUpdateQuery.insertData();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
 			
 			
 
@@ -140,8 +146,8 @@ public class MyDatabase implements Database {
 
 
 	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
-
-		return null;
+		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions);
+		return executeQuery.select();
 
 	}
 /*

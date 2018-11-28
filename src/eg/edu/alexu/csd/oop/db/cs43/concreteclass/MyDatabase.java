@@ -3,12 +3,15 @@ package eg.edu.alexu.csd.oop.db.cs43.concreteclass;
 import java.io.File;
 import java.sql.SQLException;
 
-
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
+import eg.edu.alexu.csd.oop.db.cs43.Delete;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
+
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteUpdateQuery;
+
+import eg.edu.alexu.csd.oop.db.cs43.Update;
 
 public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
@@ -60,7 +63,7 @@ public class MyDatabase implements Database {
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] types = commandsParser.getTypes();
-	
+
 			try {
 				return executeStructureQuerys.createTable();
 			} catch (Exception e) {
@@ -81,7 +84,7 @@ public class MyDatabase implements Database {
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
-			
+
 			return SelectColumns(tablename, columns, conditions);
 		}
 		return null;
@@ -95,6 +98,7 @@ public class MyDatabase implements Database {
 		ExecuteUpdateQuery executeUpdateQuery = new ExecuteUpdateQuery();
 		
 		if (commandsParser.getQueryNo() == 1) { // insert
+
 			
 			executeUpdateQuery.setDataBaseFile(dataBaseFile);
 			executeUpdateQuery.setTableName(commandsParser.getTableName());
@@ -111,59 +115,53 @@ public class MyDatabase implements Database {
 
 
 		} else if (commandsParser.getQueryNo() == 2) { // update
+			
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
-			update(tablename, columns, conditions, values);
-			
+			return update(dataBaseFile, columns, conditions, values);
+		
+
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
-			
-			delete(tablename, columns, conditions, values);
+
+			return delete(dataBaseFile, columns, conditions);
+
 		}
 
 		return 0;
 	}
 
-	private void delete(String tablename, String[] columns, String[] conditions, String[] values) {
-		// TODO Auto-generated method stub
+	private int delete(File tableFolder, String[] columns, String[] conditions) {
+	 Delete delete = new Delete(tableFolder, columns, conditions);
+	 return delete.execute();
+		
 
 	}
 
-	private void update(String tablename, String[] columns, String[] conditions, String[] values) {
-		// TODO Auto-generated method stub
-
+	private int update(File tableFolder, String[] columns, String[] conditions, String[] values) {
+		Update update = new Update(tableFolder, columns, conditions, values);
+		return update.execute();
 	}
 
-	private void insert(String tablename, String[] columns, String[] values) {
+	private int insert(File tableFolder, String[] columns, String[] values) {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
-
 
 	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
 		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions);
 		return executeQuery.select();
 
 	}
-/*
-	private boolean dropTable(String string) {
-		int count = 0;
-		File[] files = dataBaseFile.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().contains(string)) {
-				files[i].delete();
-				count++;
-			}
-		}
-		if (count == 2) {
-			return true;
-		}
-		return false;
-	}
-*/
+	/*
+	 * private boolean dropTable(String string) { int count = 0; File[] files =
+	 * dataBaseFile.listFiles(); for (int i = 0; i < files.length; i++) { if
+	 * (files[i].getName().contains(string)) { files[i].delete(); count++; } } if
+	 * (count == 2) { return true; } return false; }
+	 */
 }

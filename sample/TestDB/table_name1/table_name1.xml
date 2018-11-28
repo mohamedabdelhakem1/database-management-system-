@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><table_name1/>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><table_name1><row><column_name1>'r'</column_name1><column_name2>3</column_name2><column_name3>'s'</column_name3></row></table_name1>
+>>>>>>> branch 'master' of https://youseffathy@bitbucket.org/mohamedmohamed1/dbms.git

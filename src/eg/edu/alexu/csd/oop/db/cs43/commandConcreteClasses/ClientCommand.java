@@ -33,7 +33,7 @@ public class ClientCommand implements CommandFactory {
 		}
 		else if (strs[0].equalsIgnoreCase("delete") || strs[0].equalsIgnoreCase("insert")
 				|| (strs[0].equalsIgnoreCase("update"))) {
-			commandClass = new Update();
+			commandClass = new UpdateQuery();
 		} else if (strs[0].equalsIgnoreCase("select")) {
 			commandClass = new SelectQuery();
 		}

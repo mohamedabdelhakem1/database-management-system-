@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-
 import javax.management.Query;
-
 
 public class CommandsParser {
 	private String tableName;
@@ -24,8 +22,9 @@ public class CommandsParser {
 
 	public String[] validateCommand(String command) {
 		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
-	    String pattern ="((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)"; 
-		//String pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
+		String pattern = "((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
+		// String pattern =
+		// "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
 
@@ -114,16 +113,16 @@ public class CommandsParser {
 				values = new LinkedList<String>();
 				boolean where = true;
 				for (int i = 3; i < strs.length && !strs[i].equalsIgnoreCase("where"); i = i + 2) {
-					if(strs[i].equalsIgnoreCase("where")||strs[i+1].equalsIgnoreCase("where")) {
+					if (strs[i].equalsIgnoreCase("where") || strs[i + 1].equalsIgnoreCase("where")) {
 						where = false;
 						columns = null;
-						values =null;
+						values = null;
 						break;
 					}
 					columns.add(strs[i]);
 					values.add(strs[i + 1]);
 					Queryno = 2;
-					
+
 				}
 				conditons = null;
 				if (3 + 2 * columns.size() < strs.length && strs[3 + 2 * columns.size()].equalsIgnoreCase("where")) {
@@ -139,7 +138,7 @@ public class CommandsParser {
 					conditons = null;
 					columns = null;
 					Queryno = 0;
-					values =null;
+					values = null;
 				}
 
 			}
@@ -147,7 +146,10 @@ public class CommandsParser {
 		} else if (strs[0].equalsIgnoreCase("delete")) {
 			if (strs[1].equalsIgnoreCase("from")) {
 				tableName = strs[2];
-				if (3 < strs.length && strs[3].equalsIgnoreCase("where")) {
+				if (strs.length == 3) {
+					conditons = null;
+					Queryno = 3;
+				} else if (3 < strs.length && strs[3].equalsIgnoreCase("where")) {
 					String allConditions = command.split("(?i)where")[1].trim();
 					allConditions = allConditions.replaceAll("(\\s*([<]{1,})\\s*)", " < ");
 					allConditions = allConditions.replaceAll("(\\s*([=]{1,})\\s*)", " = ");

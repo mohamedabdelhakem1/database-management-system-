@@ -15,9 +15,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class XmlValidation {
+	/*XmlValidation validation = new XmlValidation();
+	validation.validateXml(new File("sample"+System.getProperty("file.separator")+"testDB"	+System.getProperty("file.separator")+"table_name1"));
+*/ private boolean b = false;
 	
-	
-	public void validateXml(File tablefolder) {
+	public void validateXml(File tablefolder) throws Exception{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
 		factory.setNamespaceAware(true);
@@ -34,31 +36,34 @@ public class XmlValidation {
 
 		DocumentBuilder builder;
 		try {
+			
 			builder = factory.newDocumentBuilder();
 			builder.setErrorHandler(new ErrorHandler() {
 
 				@Override
 				public void warning(SAXParseException exception) throws SAXException {
-					System.out.println(exception.getMessage());
+				b = true;
 					
 
 				}
 
 				@Override
 				public void fatalError(SAXParseException exception) throws SAXException {
-					System.out.println(exception.getMessage());
+					b = true;
 
 				}
 
 				@Override
 				public void error(SAXParseException exception) throws SAXException {
-					System.out.println(exception.getMessage());
+					b = true;
 
 				}
 			});
 			Document document = builder.parse(new InputSource(
 					tablefolder.getAbsolutePath() + System.getProperty("file.separator") +tablefolder.getName() + ".Xml"));
-			
+			if(b) {
+				throw new Exception();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

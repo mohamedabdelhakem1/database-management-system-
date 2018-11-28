@@ -1,9 +1,11 @@
 package eg.edu.alexu.csd.oop.db.cs43;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,11 +26,24 @@ import com.sun.org.apache.xerces.internal.xs.XSLoader;
 import com.sun.org.apache.xerces.internal.xs.XSModel;
 
 public class XSDReader {
-	private List<String> columns = new LinkedList<>();
-	private List<String> types = new LinkedList<>();
+	private List<String> columns;
+	private List<String> types;
 
 	public XSDReader() {
+		types = new LinkedList<>();
+		columns = new LinkedList<>();
+	}
 
+	public String[] getTypes() {
+		String [] temp = new String[types.size()];
+		temp = types.toArray(temp);
+		return temp;
+	}
+
+	public String[] getColumns() {
+		String [] temp = new String[types.size()];
+		temp = columns.toArray(temp);
+		return temp;
 	}
 
 	public void ReadXSD(String path) {
@@ -37,22 +52,19 @@ public class XSDReader {
 		DocumentBuilder documentBuilder;
 		try {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse("table_name1.xsd");
+			Document document = documentBuilder.parse(xsd);
 			NodeList list = document.getElementsByTagName("xs:element");
 			for (int i = 2; i < list.getLength(); i++) {
 				NamedNodeMap map = list.item(i).getAttributes();
-				map.getNamedItem("name");
-				columns.add(String.valueOf(map.item(0)));
-				System.out.println(map.getNamedItem("name"));
-				System.out.println(map.getNamedItem("type"));
-				//types.add(String.valueOf(map.item(0).getNodeType()));
-			//	System.out.println((map.item(0).getNodeType()));
-			}
-			
-			
+				String column = map.getNamedItem("name").getNodeValue();
+				String type = map.getNamedItem("type").getNodeValue();
+				type = type.substring(3, type.length());
+				columns.add(column);
+				types.add(type);
+							}
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 
 	}

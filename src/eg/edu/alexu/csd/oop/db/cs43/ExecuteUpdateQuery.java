@@ -31,8 +31,14 @@ public class ExecuteUpdateQuery {
 		
 		File tablefolder = new File(DataBaseFile.getAbsolutePath() +System.getProperty("file.separator") + tableName);
 		if(!tablefolder.exists()) {
+			//table isn't exist in database
 			throw new SQLException();
 		}
+		
+		
+		
+		
+		
 		return 0;
 	}
 

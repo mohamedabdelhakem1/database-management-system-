@@ -40,8 +40,7 @@ public class XmlValidation {
 				@Override
 				public void warning(SAXParseException exception) throws SAXException {
 					System.out.println(exception.getMessage());
-					
-
+	
 				}
 
 				@Override
@@ -60,7 +59,7 @@ public class XmlValidation {
 					tablefolder.getAbsolutePath() + System.getProperty("file.separator") +tablefolder.getName() + ".Xml"));
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

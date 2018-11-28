@@ -14,26 +14,27 @@ public class ColumnsManipulation {
 		this.allcolumns = allcolumns;
 		this.selectedColumns = selectedColumns;
 	}
-	public Object[][] getSelectedColumns() throws Exception{
-		List< String > temp = new LinkedList<>();
-		temp = Arrays.asList(selectedColumns);
+
+	public Object[][] getSelectedColumns() throws Exception {
+
 		Object[][] returnedvalues = new Object[Filteredvalues.length][selectedColumns.length];
 		for (int i = 0; i < Filteredvalues.length; i++) {
 			int c = 0;
 			for (int j = 0; j < Filteredvalues[0].length; j++) {
-				if (temp.contains(allcolumns[j])) {
-					returnedvalues[i][c] = Filteredvalues[i][j];
-					c++;
+				for (int k = 0; k < selectedColumns.length; k++) {
+					if (selectedColumns[k].equalsIgnoreCase(allcolumns[j])) {
+						returnedvalues[i][c] = Filteredvalues[i][j];
+						c++;
+					}
 				}
+
 			}
-			if (c != temp.size()) {
+			if (c != selectedColumns.length) {
 				throw new Exception();
 			}
 		}
-		
+
 		return returnedvalues;
 	}
-	
-	
-	
+
 }

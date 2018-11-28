@@ -4,16 +4,12 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
-import com.sun.rowset.internal.Row;
-import com.sun.xml.internal.ws.util.StringUtils;
-
-public class Update {
+public class Delete {
 	private File tableFolder;
 	private String[] columns;
 	private String[] conditions;
-	private String[] values;
+
 	private ReadXml readXml;
 	private Object[][] Storedvalues;
 	private XSDReader reader;
@@ -22,11 +18,11 @@ public class Update {
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
 
-	public Update(File tableFolder, String[] columns, String[] conditions, String[] values) {
+	public Delete(File tableFolder, String[] columns, String[] conditions) {
 		this.columns = columns;
 		this.conditions = conditions;
 		this.tableFolder = tableFolder;
-		this.values = values;
+
 		readXml = new ReadXml();
 		try {
 			Storedvalues = readXml.getArray(new File(tableFolder.getAbsolutePath()
@@ -40,50 +36,40 @@ public class Update {
 		allcolumns = reader.getColumns();
 		allTypes = reader.getTypes();
 
-		new LinkedList<>();
-		Arrays.asList(allcolumns);
 	}
 
 	public int execute() {
-
 		if (conditions == null) {
-			// affect all the rows
+			System.out.println("null");
 
-			for (int i = 0; i < Storedvalues.length; i++) {
-				int c = 0;
-				for (int j = 0; j < Storedvalues[0].length; j++) {
-					for (int k = 0; k < columns.length; k++) {
-						if (columns[k].equalsIgnoreCase(allcolumns[j])) {
-							Storedvalues[i][j] = values[k];
-							c++;
-						}
-					}
-				}
-				if (c != columns.length) {
-					return 0;
-				}
-			}
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tableFolder);
+				writeXml.writeTable(null, allcolumns, tableFolder);
 			} catch (Exception e) {
+				// e.printStackTrace();
 				return 0;
 			}
 			return Storedvalues.length;
 
 		} else if (conditions != null) {
 
+			List<Object[]> newRows = new LinkedList<>();
 			manipulation = new ConditionsManipulation(Storedvalues, conditions, allcolumns, allTypes);
+
 			Object[][] RowsTobeAffected = new Object[0][0];
 			try {
 				RowsTobeAffected = manipulation.getArrayAfterCondiotions();
+
 			} catch (Exception e) {
+
 			}
 			int countAffectedRows = 0;
+
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int count = 0;
 				for (int k = 0; k < RowsTobeAffected.length; k++) {
 					count = 0;
+
 					for (int j = 0; j < Storedvalues[0].length; j++) {
 						if (RowsTobeAffected[k][j].equals(Storedvalues[i][j])) {
 							count++;
@@ -92,33 +78,33 @@ public class Update {
 					}
 					if (count == Storedvalues[0].length) {
 						countAffectedRows++;
+
 						break;
 					}
 				}
-				if (count == Storedvalues[0].length) {
-					int c = 0;
-					for (int j = 0; j < Storedvalues[0].length; j++) {
-						for (int k = 0; k < columns.length; k++) {
-							if (columns[k].equalsIgnoreCase(allcolumns[j])) {
-								Storedvalues[i][j] = values[k];
-								c++;
-							}
-						}
-					}
-					if (c != columns.length) {
-						return 0;
-					}
+				if (count != Storedvalues[0].length) {
+					newRows.add(Storedvalues[i]);
 				}
+			}
+
+			Object[][] returnedRows;
+			try {
+				returnedRows = new Object[newRows.size()][newRows.get(0).length];
+				returnedRows = newRows.toArray(returnedRows);
+
+			
+			} catch (Exception e1) {
+				returnedRows = null;
 			}
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tableFolder);
+				writeXml.writeTable(returnedRows, allcolumns, tableFolder);
 			} catch (Exception e) {
 				return 0;
 			}
 			return countAffectedRows;
 		}
 		return 0;
-	}
 
+	}
 }

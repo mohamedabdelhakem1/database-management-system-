@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ExecuteQuery {
-	private File tableFolder;
+	
 	private String[] columns;
 	private String[] conditions;
 	private ReadXml readXml;
@@ -19,7 +19,6 @@ public class ExecuteQuery {
 	public ExecuteQuery(File tableFolder, String[] columns, String[] conditions) {
 		this.columns = columns;
 		this.conditions = conditions;
-		this.tableFolder = tableFolder;
 		readXml = new ReadXml();
 		try {
 			values = readXml.getArray(new File(tableFolder.getAbsolutePath() + System.getProperty("file.separator")
@@ -43,18 +42,20 @@ public class ExecuteQuery {
 		} else if (columns != null && conditions == null) { // select columns in columns array
 
 			Object[][] returnedvalues = new Object[values.length][columns.length];
-			List<String> cols = new LinkedList<>();
-			cols = Arrays.asList(columns);
+			
 			for (int i = 0; i < values.length; i++) {
 				int c = 0;
 				for (int j = 0; j < values[0].length; j++) {
-					if (cols.contains(allcolumns[j])) {
-						returnedvalues[i][c] = values[i][j];
-						c++;
+					for(int k = 0 ;k<columns.length;k++) {
+						if(columns[k].equalsIgnoreCase(allcolumns[j])) {
+							returnedvalues[i][c] = values[i][j];
+							c++;
+						}
 					}
+					
 				}
 
-				if (c != cols.size()) {
+				if (c != columns.length) {
 					return null;
 				}
 			}

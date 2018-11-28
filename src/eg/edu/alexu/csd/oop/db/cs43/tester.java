@@ -29,12 +29,8 @@ public class tester {
 		Database database = MyDatabase.getInstance();
 		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
 				+ System.getProperty("file.separator") + "table_name1", false);
-		Object[][] els = database.executeQuery("select column_name1 , column_name2 from table_name1 where column_name2 <5 or column_name1 = 's'" );
-		for (int i = 0; i < els.length; i++) {
-			for (int j = 0; j < els[0].length; j++) {
-				System.out.println(els[i][j]);
-			}
-		}
+		int s=database.executeUpdateQuery("delete from table_name1 where column_name1 = 'zw' or column_name2 =  88" );
+		System.out.println(s);
 	}
 
 }

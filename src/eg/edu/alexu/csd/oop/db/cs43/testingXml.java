@@ -7,9 +7,15 @@ import java.util.List;
 
 
 
+import org.junit.Assert;
+
+import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
+
 public  class testingXml {
 
 	public static void main(String[] args) throws Exception {
+
 		Object[][] values = new Object[][] {{15,10,2},{4,3,6},{2,8,9}};
 		String[]allcolumns = new String[] {"column1","column2","column3"};
 		String[]allTypes = {"Column1"};
@@ -22,6 +28,7 @@ public  class testingXml {
 			
 		}
 		
+
 	}
 
 }

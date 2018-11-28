@@ -1,6 +1,7 @@
 package eg.edu.alexu.csd.oop.db.cs43;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,8 +43,10 @@ public class XmlValidation {
 
 				@Override
 				public void warning(SAXParseException exception) throws SAXException {
+
 				b = true;
 					
+
 
 				}
 
@@ -62,10 +65,10 @@ public class XmlValidation {
 			Document document = builder.parse(new InputSource(
 					tablefolder.getAbsolutePath() + System.getProperty("file.separator") +tablefolder.getName() + ".Xml"));
 			if(b) {
-				throw new Exception();
+				throw new SQLException();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

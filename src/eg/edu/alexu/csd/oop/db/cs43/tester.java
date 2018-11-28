@@ -23,14 +23,19 @@ import eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase;
 
 public class tester {
 
-	private final static String NS_PREFIX = "xs:";
+
+
 
 	public static void main(String[] args) throws SQLException {
 		Database database = MyDatabase.getInstance();
 		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
 				+ System.getProperty("file.separator") + "table_name1", false);
-		int s=database.executeUpdateQuery("delete from table_name1 where column_name1 = 'zw' or column_name2 =  '88'" );
+
+
+		int s=database.executeUpdateQuery("delete from table_name1 where column_name1 = 'zw' or column_name2 =  88" );
+
 		System.out.println(s);
+
 	}
 
 }

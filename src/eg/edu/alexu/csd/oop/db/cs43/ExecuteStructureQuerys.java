@@ -85,26 +85,7 @@ public class ExecuteStructureQuerys {
 		return tableFolder.delete();
 	}
 
-	private void createTableSchema(File tabFolder2) throws IOException {
-		File xmlSchema = new File(
-				tabFolder2.getAbsolutePath() + System.getProperty("file.separator") + tableName + ".xsd");
-		FileWriter fileWriter = new FileWriter(xmlSchema);
-		BufferedWriter br = new BufferedWriter(fileWriter);
-		br.write("<?xml version=\"1.0\"?>");
-		br.newLine();
-		br.write("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">");
-		br.newLine();
-		br.newLine();
-		br.write("  " + "<xs:element name= " + " \"" + tableName + " \" >");
-		br.newLine();
-		br.write("    " + "<xs:complexType>");
-		br.newLine();
-		br.write("     " + "<xsd:sequence>");
-		br.newLine();
-		for (int i = 0; i < columnsnames.length; ++i) {
-			br.write("      " + "<xsd:element " + "name= \"" + columnsnames[i] + "\"");
-		}
-	}
+	
 
 	private void createXmlSchema(File tablefolder) {
 		try {

@@ -8,6 +8,9 @@ import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
 import eg.edu.alexu.csd.oop.db.cs43.Delete;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
+
+import eg.edu.alexu.csd.oop.db.cs43.ExecuteUpdateQuery;
+
 import eg.edu.alexu.csd.oop.db.cs43.Update;
 
 public class MyDatabase implements Database {
@@ -89,14 +92,27 @@ public class MyDatabase implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
+	
 
 		commandsParser.validateCommand(query);
+		ExecuteUpdateQuery executeUpdateQuery = new ExecuteUpdateQuery();
+		
 		if (commandsParser.getQueryNo() == 1) { // insert
 
-			String tablename = commandsParser.getTableName();
-			String[] columns = commandsParser.getColumns();
-			String[] values = commandsParser.getValues();
-			return insert(dataBaseFile, columns, values);
+			
+			executeUpdateQuery.setDataBaseFile(dataBaseFile);
+			executeUpdateQuery.setTableName(commandsParser.getTableName());
+			executeUpdateQuery.setColumnsNames(commandsParser.getColumns());
+			executeUpdateQuery.setColumnsValues(commandsParser.getValues());
+			try {
+				executeUpdateQuery.insertData();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new SQLException();
+			}
+			
+			
+
 
 		} else if (commandsParser.getQueryNo() == 2) { // update
 			
@@ -112,7 +128,9 @@ public class MyDatabase implements Database {
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
+
 			return delete(dataBaseFile, columns, conditions);
+
 		}
 
 		return 0;

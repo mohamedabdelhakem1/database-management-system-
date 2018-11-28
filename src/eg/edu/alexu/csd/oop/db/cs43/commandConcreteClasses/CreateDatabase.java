@@ -15,7 +15,7 @@ public class CreateDatabase implements Command {
 
 	@Override
 	public void execute(String s) {
-
+		database.createDatabase(s, dropIfExists);
 	}
 
 }

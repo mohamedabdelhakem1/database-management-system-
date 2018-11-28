@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Delete {
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
+
+public class Delete  implements ExecuteUpdateQuery{
 	private File tableFolder;
 	private String[] columns;
 	private String[] conditions;

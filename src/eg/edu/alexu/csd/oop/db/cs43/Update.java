@@ -9,7 +9,9 @@ import java.util.concurrent.CountDownLatch;
 import com.sun.rowset.internal.Row;
 import com.sun.xml.internal.ws.util.StringUtils;
 
-public class Update {
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
+
+public class Update implements ExecuteUpdateQuery {
 	private File tableFolder;
 	private String[] columns;
 	private String[] conditions;

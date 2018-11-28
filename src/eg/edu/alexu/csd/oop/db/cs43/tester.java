@@ -29,7 +29,7 @@ public class tester {
 		Database database = MyDatabase.getInstance();
 		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
 				+ System.getProperty("file.separator") + "table_name1", false);
-		int s=database.executeUpdateQuery("delete from table_name1 where column_name1 = 'zw' or column_name2 =  88" );
+		int s=database.executeUpdateQuery("delete from table_name1 where column_name1 = 'zw' or column_name2 =  '88'" );
 		System.out.println(s);
 	}
 

@@ -185,11 +185,12 @@ public class SanityTest {
 			Assert.assertNotEquals("Insert returned zero rows", 0, count2);
 			int count3 = db.executeUpdateQuery("INSERT INTO table_name2(column_name1, COLUMN_NAME3, column_NAME2) VALUES ('value2', 'value4', 6)");
 			Assert.assertNotEquals("Insert returned zero rows", 0, count3);
-
+			
 			int count4 = db.executeUpdateQuery("DELETE From table_name2  WHERE coLUmn_NAME1='VAluE1'");
 			Assert.assertEquals("Delete returned wrong number", 2, count4);
-
+		
 			int count5 = db.executeUpdateQuery("UPDATE table_name2 SET column_name1='11111111', COLUMN_NAME2=22222222, column_name3='333333333' WHERE coLUmn_NAME2=4");
+			
 			Assert.assertEquals("Update returned wrong number", 0, count5);
 		} catch (Throwable e){
 			TestRunner.fail("Failed to complete scenario 2", e);

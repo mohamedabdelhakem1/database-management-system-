@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.xml.transform.sax.*;
 import javax.print.Doc;
 import javax.xml.XMLConstants;
@@ -14,20 +16,25 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.*;
 
 import org.apache.commons.io.FileUtils;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import com.sun.org.apache.regexp.internal.recompile;
 
 public class ExecuteStructureQuerys {
 	private final static String NS_PREFIX = "xs:";
@@ -53,15 +60,16 @@ public class ExecuteStructureQuerys {
 	}
 
 	public boolean createDataBase() {
-		if (dataBaseFile.exists()) {
-			try {
-				FileUtils.deleteDirectory(dataBaseFile);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			
+		boolean b = dataBaseFile.mkdirs();
+
+		if (b == false) {
+			dropDataBase();
+			return dataBaseFile.mkdirs();
+
+		} else {
+			return true;
 		}
-		return dataBaseFile.mkdirs();
+
 	}
 
 	public boolean dropDataBase() {
@@ -76,29 +84,52 @@ public class ExecuteStructureQuerys {
 		return false;
 	}
 
-	public boolean createTable() throws Exception {
+	public boolean createTable() throws SQLException {
+		if (columnsnames == null || columnsTypes == null) {
+			throw new SQLException();
+		}
 		File tablefolder = new File(dataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
+		if (tablefolder.exists()) {
+			return false;
+		}
 		tablefolder.mkdir();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document d = db.newDocument();
-		Element table = d.createElement(tableName);
-		d.appendChild(table);
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document d = db.newDocument();
+			Element table = d.createElement(tableName);
+			d.appendChild(table);
 
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(d);
-		File xmlFile = new File(
-				tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tableName + ".xml");
-		StreamResult streamResult = new StreamResult(xmlFile);
-		transformer.transform(source, streamResult);
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(d);
+			File xmlFile = new File(
+					tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tableName + ".xml");
+			StreamResult streamResult = new StreamResult(xmlFile);
+			transformer.transform(source, streamResult);
+		} catch (DOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		createXmlSchema(tablefolder);
 
 		return true;
 	}
 
 	public boolean dropTable() {
-		
+
 		File tableFolder = new File(dataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
 		if (tableFolder.exists()) {
 			try {

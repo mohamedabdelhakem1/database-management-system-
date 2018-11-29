@@ -3,6 +3,10 @@ package eg.edu.alexu.csd.oop.db.cs43.concreteclass;
 import java.io.File;
 import java.sql.SQLException;
 
+import org.apache.commons.io.FileUtils;
+
+import com.sun.org.apache.regexp.internal.recompile;
+
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
 import eg.edu.alexu.csd.oop.db.cs43.Delete;
@@ -16,6 +20,8 @@ public class MyDatabase implements Database {
 	private CommandsParser commandsParser;
 	private File dataBaseFile;
 	private static Database database = null;
+	private boolean open  = false;
+	
 
 	public MyDatabase() {
 		commandsParser = new CommandsParser();
@@ -31,18 +37,30 @@ public class MyDatabase implements Database {
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		dataBaseFile = new File(databaseName);
+		dataBaseFile = new File(databaseName.toLowerCase());
 
 		if (dropIfExists) {
+			open = false;
 			try {
-				executeStructureQuery("drop database " + databaseName);
+				executeStructureQuery("drop database " + databaseName.toLowerCase());
+			} catch (SQLException e) {
+			}
+			try {
+				executeStructureQuery("create database " + databaseName.toLowerCase());
+			} catch (SQLException e) {
+			}
+			
+		}else {
+			if(dataBaseFile.exists()) {
+				open =  true;
+			}
+			try {
+				executeStructureQuery("create database " + databaseName.toLowerCase());
 			} catch (SQLException e) {
 			}
 		}
-		try {
-			executeStructureQuery("create database " + databaseName);
-		} catch (SQLException e) {
-		}
+		
+		
 		return dataBaseFile.getAbsolutePath();
 
 	}
@@ -51,29 +69,33 @@ public class MyDatabase implements Database {
 	public boolean executeStructureQuery(String query) throws SQLException {
 		ExecuteStructureQuerys executeStructureQuerys = new ExecuteStructureQuerys();
 		commandsParser.validateCommand(query);
-		if(dataBaseFile == null) {
-			dataBaseFile = new File(commandsParser.getTableNameOrDatabase().toLowerCase());
-		}
+		
 		executeStructureQuerys.setDataBaseFile(dataBaseFile);
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
-			
+			if(open) {
+				return true;
+			}
+			if(dataBaseFile == null) {
+				dataBaseFile = new File(commandsParser.getTableNameOrDatabase().toLowerCase());
+				executeStructureQuerys.setDataBaseFile(dataBaseFile);
+			}
 			return executeStructureQuerys.createDataBase();
 		} else if (queryNo == 5) {
 			executeStructureQuerys.setTableName(commandsParser.getTableNameOrDatabase().toLowerCase());
 			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
 			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
-			try {
-				return executeStructureQuerys.createTable();
-			} catch (Exception e) {
-			}
+			
+			return executeStructureQuerys.createTable();
 		} else if (queryNo == 6) {
 			return executeStructureQuerys.dropDataBase();
 		} else if (queryNo == 7) {
 			executeStructureQuerys.setTableName(commandsParser.getTableNameOrDatabase().toLowerCase());
 			return executeStructureQuerys.dropTable();
 		}
-		return false;
+		
+		throw new SQLException();
+		
 	}
 
 	@Override
@@ -96,8 +118,8 @@ public class MyDatabase implements Database {
 		ExecuteUpdateQueryCommad executeUpdateQuery;
 
 		if (commandsParser.getQueryNo() == 1) { // insert
-			executeUpdateQuery = new Insert(commandsParser.getValues(), dataBaseFile, commandsParser.getTableNameOrDatabase().toLowerCase(),
-					commandsParser.getColumns());
+			executeUpdateQuery = new Insert(commandsParser.getValues(), dataBaseFile,
+					commandsParser.getTableNameOrDatabase().toLowerCase(), commandsParser.getColumns());
 
 			try {
 				return executeUpdateQuery.execute();
@@ -115,15 +137,14 @@ public class MyDatabase implements Database {
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 			executeUpdateQuery = new Update(dataBaseFile, columns, conditions, values, tablename);
-			
-				return executeUpdateQuery.execute();
-			
+
+			return executeUpdateQuery.execute();
 
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableNameOrDatabase().toLowerCase();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
-		
+
 			executeUpdateQuery = new Delete(dataBaseFile, columns, conditions, tablename);
 			try {
 				return executeUpdateQuery.execute();

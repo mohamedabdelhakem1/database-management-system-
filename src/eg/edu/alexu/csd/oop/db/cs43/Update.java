@@ -54,7 +54,8 @@ public class Update implements ExecuteUpdateQueryCommad {
 
 	@Override
 	public int execute() throws SQLException {
-		if(Storedvalues.length == 0) {
+		
+		if(Storedvalues == null) {
 			throw new SQLException();
 		}
 		if (conditions == null) {
@@ -104,11 +105,14 @@ public class Update implements ExecuteUpdateQueryCommad {
 			try {
 
 				RowsTobeAffected = manipulation.getArrayAfterCondiotions();
-
+				if(RowsTobeAffected == null) {
+					return 0;
+				}
 			} catch (Exception e) {
 			}
 			int countAffectedRows = 0;
-
+			
+			
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int count = 0;
 				for (int k = 0; k < RowsTobeAffected.length; k++) {

@@ -37,6 +37,12 @@ public class CommandsParser {
 				}
 			} else if (strs[1].equalsIgnoreCase("table")) {
 				tableName = strs[2];
+				if (strs.length < 4) {
+					Queryno = 0;
+					columns = null;
+					datatypes = null;
+					return null;
+				}
 				columns = new LinkedList<String>();
 				for (int i = 3; i < strs.length; i = i + 2) {
 					columns.add(strs[i]);
@@ -85,24 +91,33 @@ public class CommandsParser {
 				tableName = strs[2];
 				columns = new LinkedList<>();
 				values = new LinkedList<>();
-				for (int i = 3; i < strs.length && !strs[i].equalsIgnoreCase("values"); i++) {
-					columns.add(strs[i]);
-
-				}
-				if (columns.size() + 3 < strs.length && strs[columns.size() + 3].equalsIgnoreCase("values")) {
-					for (int i = columns.size() + 4; i < strs.length; i++) {
+				if (strs[3].equalsIgnoreCase("values")) {
+					for (int i = 4; i < strs.length; i++) {
 						values.add(strs[i]);
+					}
+				} else {
+					for (int i = 3; i < strs.length && !strs[i].equalsIgnoreCase("values"); i++) {
+						columns.add(strs[i]);
 
 					}
-					Queryno = 1;
-					if (values.size() != columns.size()) {
-						columns = null;
-						values = null;
-
-						Queryno = 0;
-						return null;
+					if (columns.size() + 3 < strs.length && strs[columns.size() + 3].equalsIgnoreCase("values")) {
+						for (int i = columns.size() + 4; i < strs.length; i++) {
+							values.add(strs[i]);
+						}
 					}
 				}
+				Queryno = 1;
+				if ((values.size() != 0 && columns.size() != 0 && values.size() == columns.size())) {
+					
+				}else if(values.size() != 0 && columns.size() == 0){
+					
+				}else {
+					columns = null;
+					values = null;
+					Queryno = 0;
+					return null;
+				}
+
 			}
 
 		} else if (strs[0].equalsIgnoreCase("update")) {

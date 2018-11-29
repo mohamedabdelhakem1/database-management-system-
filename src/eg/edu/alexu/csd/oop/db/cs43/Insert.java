@@ -22,7 +22,7 @@ public class Insert implements ExecuteUpdateQueryCommad {
 	}
 
 	public int execute() throws SQLException{
-		if(columnsNames.length == 0 ||columnsValues.length == 0 ||DataBaseFile == null) {
+		if(columnsValues.length == 0 ||DataBaseFile == null) {
 			return 0;
 		}
 		File tablefolder = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
@@ -46,20 +46,30 @@ public class Insert implements ExecuteUpdateQueryCommad {
 		if (xmlData == null) {
 			xmlData = new Object[0][0];
 		}
-		Object[][] newXmlData = CopyOldXmlInNewXml(xmlData, columnsNames.length);
+		Object[][] newXmlData = CopyOldXmlInNewXml(xmlData, columnsValues.length);
 
-		if (tableColumnsNames.length != columnsNames.length) {
+		if (tableColumnsNames.length != columnsValues.length) {
 			return 0;
 		}
-
+		
 		for (int i = 0; i < tableColumnsNames.length; ++i) {
-			int index = getIndex(tableColumnsNames[i], columnsNames);// query jas column name doesnot exist
+			int index = -2;
+			if(columnsNames.length == 0) {
+				System.out.println("length");
+				index = i;
+			}else {
+				
+				 index = getIndex(tableColumnsNames[i], columnsNames);// query has column name does not exist
+			}
+			
 			if (index == -1) {// query has column name does not exist
 				return 0;
 			}
+			
 			if (alltypes[i].equalsIgnoreCase("string")) {
 				if (columnsValues[index].startsWith("'") && columnsValues[index].endsWith("'")) {
 					newXmlData[xmlData.length][i] = columnsValues[index];
+					
 				} else {
 					return 0;
 				}

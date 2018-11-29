@@ -41,9 +41,9 @@ public class ConditionsManipulation {
 				String operand = conditions[j];
 				String operation = conditions[j + 1];
 				String value = conditions[j + 2];
-			//	 System.out.println(operand);
-			//	 System.out.println(operation);
-			//	 System.out.println(value);
+				 System.out.println(operand);
+				 System.out.println(operation);
+				 System.out.println(value);
 				if (operation.equals("=") || operation.equals("<") || operation.equals(">")) {
 					
 					foundOperation = true;
@@ -77,10 +77,11 @@ public class ConditionsManipulation {
 					// now comparing the values
 
 					if (operation.equals("=")) {
-						System.out.println("ss");
+						
 						if (currenttype.equals("string")) {
 							if (ComparedString.equalsIgnoreCase(String.valueOf(map.get(allcolumns[index])))) {
 								addThisRowOrnot = true;
+								
 							} else {
 								addThisRowOrnot = false;
 							}
@@ -123,6 +124,7 @@ public class ConditionsManipulation {
 						}
 					}
 					j = j + 2;
+					
 					
 				}
 				if (operand.equalsIgnoreCase("not") || FoundNot == 1) {
@@ -176,6 +178,7 @@ public class ConditionsManipulation {
 			}
 			// System.out.println(addThisRowOrnot);
 		}
+		
 		if (objects.size() != 0) {
 			Object[][] returnedrows = new Object[objects.size()][objects.get(0).size()];
 			for (int i = 0; i < objects.size(); i++) {
@@ -189,6 +192,7 @@ public class ConditionsManipulation {
 	private int getIndexOfcolumn(String s) {
 		for (int i = 0; i < allcolumns.length; i++) {
 			if (allcolumns[i].equalsIgnoreCase(s)) {
+				
 				return i;
 			}
 		}

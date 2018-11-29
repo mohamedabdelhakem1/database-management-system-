@@ -38,6 +38,7 @@ public class ReadXml {
 			DocumentBuilder documentBuilder;
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document ;
+			
 			document = documentBuilder.parse(table);
 		
 		
@@ -50,6 +51,9 @@ public class ReadXml {
 			NodeList rows = document.getElementsByTagName("row");
 			if (values == null) {
 				noOfRows = rows.getLength();
+			}
+			if(rows.getLength() == 0) {
+				return new Object[0][0];
 			}
 			for (int i = 0; i < noOfRows; i++) {
 				Node row = rows.item(i);
@@ -75,7 +79,7 @@ public class ReadXml {
 			}
 		}
 		}catch (Exception e) {
-			return new Object[0][0];
+			return null;
 		}
 		return values;
 	}

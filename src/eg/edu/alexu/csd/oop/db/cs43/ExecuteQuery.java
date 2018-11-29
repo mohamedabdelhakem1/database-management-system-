@@ -36,6 +36,7 @@ public class ExecuteQuery implements ExecuteQueryCommand {
 		allTypes = reader.getTypes();
 
 	}
+
 	@Override
 	public Object[][] execute() {
 

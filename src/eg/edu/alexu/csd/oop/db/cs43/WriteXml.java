@@ -1,6 +1,7 @@
 package eg.edu.alexu.csd.oop.db.cs43;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,36 +30,44 @@ public class WriteXml {
 	 * @throws Exception
 	 */
 
-	public boolean writeTable(Object[][] values, String[] columnNames, File tablefolder) throws Exception {
+	public boolean writeTable(Object[][] values, String[] columnNames, File tablefolder) throws SQLException {
+		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document d = db.newDocument();
-		Element Table = d.createElement(tablefolder.getName());
-		d.appendChild(Table);
-		if (values != null) {
-			
-			for (int i = 0; i < values.length; i++) {
-				Element row = d.createElement("row");
-				Table.appendChild(row);
-				for (int j = 0; j < values[i].length; j++) {
-					Element column = d.createElement(columnNames[j]);
-					row.appendChild(column);
-					column.setTextContent((String) values[i][j]);
+		DocumentBuilder db;
+		try {
+			db = dbf.newDocumentBuilder();
+			Document d = db.newDocument();
+			Element Table = d.createElement(tablefolder.getName());
+			d.appendChild(Table);
+			if (values != null) {
+				
+				for (int i = 0; i < values.length; i++) {
+					Element row = d.createElement("row");
+					Table.appendChild(row);
+					for (int j = 0; j < values[i].length; j++) {
+						Element column = d.createElement(columnNames[j]);
+						row.appendChild(column);
+						column.setTextContent(String.valueOf(values[i][j]));
+					}
 				}
 			}
-		}
 
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource domsource = new DOMSource(d);
-		File xml = new File(
-				tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tablefolder.getName() + ".xml");
-		System.out.println(xml.getAbsolutePath());
-		if (xml.exists()) {
-			xml.delete();
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource domsource = new DOMSource(d);
+			File xml = new File(
+					tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tablefolder.getName() + ".xml");
+			System.out.println(xml.getAbsolutePath());
+			if (xml.exists()) {
+				xml.delete();
+			}
+			StreamResult streamResult = new StreamResult(xml);
+			transformer.transform(domsource, streamResult);
+			return xml.exists();
+		} catch (Exception e) {
+			return false;
 		}
-		StreamResult streamResult = new StreamResult(xml);
-		transformer.transform(domsource, streamResult);
-		return xml.exists();
+		
+
 	}
 }

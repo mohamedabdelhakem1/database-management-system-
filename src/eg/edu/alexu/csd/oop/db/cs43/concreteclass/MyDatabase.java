@@ -50,13 +50,17 @@ public class MyDatabase implements Database {
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
 		ExecuteStructureQuerys executeStructureQuerys = new ExecuteStructureQuerys();
-		executeStructureQuerys.setDataBaseFile(dataBaseFile);
 		commandsParser.validateCommand(query);
+		if(dataBaseFile == null) {
+			dataBaseFile = new File(commandsParser.getTableNameOrDatabase().toLowerCase());
+		}
+		executeStructureQuerys.setDataBaseFile(dataBaseFile);
 		int queryNo = commandsParser.getQueryNo();
 		if (queryNo == 4) {
+			
 			return executeStructureQuerys.createDataBase();
 		} else if (queryNo == 5) {
-			executeStructureQuerys.setTableName(commandsParser.getTableName());
+			executeStructureQuerys.setTableName(commandsParser.getTableNameOrDatabase().toLowerCase());
 			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
 			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
 			try {
@@ -66,7 +70,7 @@ public class MyDatabase implements Database {
 		} else if (queryNo == 6) {
 			return executeStructureQuerys.dropDataBase();
 		} else if (queryNo == 7) {
-			executeStructureQuerys.setTableName(commandsParser.getTableName());
+			executeStructureQuerys.setTableName(commandsParser.getTableNameOrDatabase().toLowerCase());
 			return executeStructureQuerys.dropTable();
 		}
 		return false;
@@ -76,7 +80,7 @@ public class MyDatabase implements Database {
 	public Object[][] executeQuery(String query) throws SQLException {
 		commandsParser.validateCommand(query);
 		if (commandsParser.getQueryNo() == 15) {
-			String tablename = commandsParser.getTableName();
+			String tablename = commandsParser.getTableNameOrDatabase().toLowerCase();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 
@@ -92,7 +96,7 @@ public class MyDatabase implements Database {
 		ExecuteUpdateQueryCommad executeUpdateQuery;
 
 		if (commandsParser.getQueryNo() == 1) { // insert
-			executeUpdateQuery = new Insert(commandsParser.getValues(), dataBaseFile, commandsParser.getTableName(),
+			executeUpdateQuery = new Insert(commandsParser.getValues(), dataBaseFile, commandsParser.getTableNameOrDatabase().toLowerCase(),
 					commandsParser.getColumns());
 
 			try {
@@ -106,20 +110,17 @@ public class MyDatabase implements Database {
 
 		} else if (commandsParser.getQueryNo() == 2) { // update
 
-			String tablename = commandsParser.getTableName();
+			String tablename = commandsParser.getTableNameOrDatabase().toLowerCase();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 			executeUpdateQuery = new Update(dataBaseFile, columns, conditions, values, tablename);
-			try {
+			
 				return executeUpdateQuery.execute();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 		} else if (commandsParser.getQueryNo() == 3) { // delete
-			String tablename = commandsParser.getTableName();
+			String tablename = commandsParser.getTableNameOrDatabase().toLowerCase();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 		
@@ -127,8 +128,7 @@ public class MyDatabase implements Database {
 			try {
 				return executeUpdateQuery.execute();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return 0;
 			}
 		}
 

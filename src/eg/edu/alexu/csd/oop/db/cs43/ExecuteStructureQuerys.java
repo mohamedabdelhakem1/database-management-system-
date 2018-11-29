@@ -21,6 +21,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.*;
 
+import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
@@ -28,8 +29,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-
-public class ExecuteStructureQuerys{
+public class ExecuteStructureQuerys {
 	private final static String NS_PREFIX = "xs:";
 	private File dataBaseFile;
 	private String tableName;
@@ -53,11 +53,27 @@ public class ExecuteStructureQuerys{
 	}
 
 	public boolean createDataBase() {
+		if (dataBaseFile.exists()) {
+			try {
+				FileUtils.deleteDirectory(dataBaseFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
 		return dataBaseFile.mkdirs();
 	}
 
 	public boolean dropDataBase() {
-		return dataBaseFile.delete();
+		if (dataBaseFile.exists()) {
+			try {
+				FileUtils.deleteDirectory(dataBaseFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public boolean createTable() throws Exception {
@@ -77,23 +93,30 @@ public class ExecuteStructureQuerys{
 		StreamResult streamResult = new StreamResult(xmlFile);
 		transformer.transform(source, streamResult);
 		createXmlSchema(tablefolder);
-		
+
 		return true;
 	}
 
 	public boolean dropTable() {
+		
 		File tableFolder = new File(dataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
-		return tableFolder.delete();
+		if (tableFolder.exists()) {
+			try {
+				FileUtils.deleteDirectory(tableFolder);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return true;
+		}
+		return false;
 	}
-
-	
 
 	private void createXmlSchema(File tablefolder) {
 		try {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
-		
+
 			Element schemaRoot = doc.createElementNS(XMLConstants.W3C_XML_SCHEMA_NS_URI, NS_PREFIX + "schema");
 			doc.appendChild(schemaRoot);
 
@@ -113,7 +136,7 @@ public class ExecuteStructureQuerys{
 			row.appendChild(complexType2);
 			Element sequence2 = elMaker.createElement("sequence");
 			complexType2.appendChild(sequence2);
-			
+
 			for (int i = 0; i < columnsnames.length; ++i) {
 				if (columnsTypes[i].equalsIgnoreCase("int")) {
 					Element col1 = elMaker.createElement("element", columnsnames[i], "xs:integer");
@@ -134,12 +157,10 @@ public class ExecuteStructureQuerys{
 
 		} catch (FactoryConfigurationError | ParserConfigurationException | TransformerException e) {
 			// handle exception
-			
+
 			e.printStackTrace();
 		}
 	}
-
-	
 
 	private static class NameTypeElementMaker {
 		private String nsPrefix;
@@ -176,9 +197,5 @@ public class ExecuteStructureQuerys{
 		}
 
 	}
-
-
-
-	
 
 }

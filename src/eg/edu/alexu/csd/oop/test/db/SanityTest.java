@@ -230,6 +230,7 @@ public class SanityTest {
 			Assert.assertEquals("Wrong number of rows", 2, result2.length);
 			Assert.assertEquals("Wrong number of columns", 3, result2[0].length);
 			Object column_2_object = result2[0][1];
+			System.out.println(column_2_object);
 			if (column_2_object instanceof String)
 				fail("This should be 'Integer', but found 'String'!");
 			else if (column_2_object instanceof Integer) {

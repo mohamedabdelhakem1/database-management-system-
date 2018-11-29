@@ -46,8 +46,6 @@ public class XmlValidation {
 
 				b = true;
 					
-
-
 				}
 
 				@Override

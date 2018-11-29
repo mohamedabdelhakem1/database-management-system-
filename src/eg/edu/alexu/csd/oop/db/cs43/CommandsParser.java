@@ -214,7 +214,7 @@ public class CommandsParser {
 		return null;
 	}
 
-	public String getTableName() {
+	public String getTableNameOrDatabase() {
 		return tableName;
 	}
 

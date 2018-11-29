@@ -62,7 +62,7 @@ public class ConditionsManipulation {
 						if (value.contains("'")) {
 							throw new Exception();
 						} else {
-							comparedint = Integer.valueOf(value);
+							comparedint = Integer.valueOf(value); // if it cant parse it throws exception
 							ValueMatchedWithType = true;
 						}
 					} else if (currenttype.equals("string")) {

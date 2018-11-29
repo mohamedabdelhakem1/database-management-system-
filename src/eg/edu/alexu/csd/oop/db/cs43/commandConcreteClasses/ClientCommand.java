@@ -31,6 +31,7 @@ public class ClientCommand implements CommandFactory {
 
 		if (strs[0].equalsIgnoreCase("create")) {
 			if (strs[1].equalsIgnoreCase("database")) {
+				
 				database = MyDatabase.getInstance();
 				database.createDatabase(databaseName, dropIfExists);
 			} else if (strs[1].equalsIgnoreCase("table")) {

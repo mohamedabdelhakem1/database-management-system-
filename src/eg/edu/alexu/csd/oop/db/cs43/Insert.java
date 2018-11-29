@@ -6,36 +6,23 @@ import java.util.concurrent.ExecutionException;
 
 import org.xml.sax.XMLReader;
 
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQueryCommad;
 
-public class ExecuteUpdateQuery  {
+
+public class Insert  implements ExecuteUpdateQueryCommad{
 	private File DataBaseFile; 
-	private String tableName;
-	
+	private String tableName;	
 	private String[] columnsNames;
-	private String[] columnsTypes;
 	private String[] columnsValues;
-
-	public void setColumnsValues(String[] columnsValues) {
+	public Insert(String[] columnsValues,File DataBaseFile,String tableName,String[] columnsnames) {
 		this.columnsValues = columnsValues;
-	}
-
-	public void setDataBaseFile(File DataBaseFile) {
 		this.DataBaseFile = DataBaseFile;
-	}
-
-	public void setTableName(String tableName) {
 		this.tableName = tableName;
-	}
-
-	public void setColumnsNames(String[] columnsnames) {
 		this.columnsNames = columnsnames;
 	}
+	
 
-	public void setColumnsTypes(String[] columnsTypes) {
-		this.columnsTypes = columnsTypes;
-	}
-
-	public int insertData() throws SQLException, Exception {
+	public int execute() throws SQLException, Exception {
 		
 		File tablefolder = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
 		if (!tablefolder.exists()) {

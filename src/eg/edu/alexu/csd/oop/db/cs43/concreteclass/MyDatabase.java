@@ -9,8 +9,7 @@ import eg.edu.alexu.csd.oop.db.cs43.Delete;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
 
-import eg.edu.alexu.csd.oop.db.cs43.ExecuteUpdateQuery;
-
+import eg.edu.alexu.csd.oop.db.cs43.Insert;
 import eg.edu.alexu.csd.oop.db.cs43.Update;
 
 public class MyDatabase implements Database {
@@ -60,10 +59,6 @@ public class MyDatabase implements Database {
 			executeStructureQuerys.setTableName(commandsParser.getTableName());
 			executeStructureQuerys.setColumnsnames(commandsParser.getColumns());
 			executeStructureQuerys.setColumnsTypes(commandsParser.getTypes());
-			String tablename = commandsParser.getTableName();
-			String[] columns = commandsParser.getColumns();
-			String[] types = commandsParser.getTypes();
-
 			try {
 				return executeStructureQuerys.createTable();
 			} catch (Exception e) {
@@ -92,72 +87,57 @@ public class MyDatabase implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-	
 
 		commandsParser.validateCommand(query);
-		ExecuteUpdateQuery executeUpdateQuery = new ExecuteUpdateQuery();
-		
-		if (commandsParser.getQueryNo() == 1) { // insert
+		ExecuteUpdateQueryCommad executeUpdateQuery;
 
-			
-			executeUpdateQuery.setDataBaseFile(dataBaseFile);
-			executeUpdateQuery.setTableName(commandsParser.getTableName());
-			executeUpdateQuery.setColumnsNames(commandsParser.getColumns());
-			executeUpdateQuery.setColumnsValues(commandsParser.getValues());
+		if (commandsParser.getQueryNo() == 1) { // insert
+			executeUpdateQuery = new Insert(commandsParser.getValues(), dataBaseFile, commandsParser.getTableName(),
+					commandsParser.getColumns());
+
 			try {
-		return	executeUpdateQuery.insertData();
-				
+				return executeUpdateQuery.execute();
+
 			} catch (Exception e) {
-			
+
 				e.printStackTrace();
 				throw new SQLException();
 			}
-			
-			
-
 
 		} else if (commandsParser.getQueryNo() == 2) { // update
-			
+
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
-			return update(dataBaseFile, columns, conditions, values,tablename.toLowerCase());
-		
+			executeUpdateQuery = new Update(dataBaseFile, columns, conditions, values, tablename);
+			try {
+				return executeUpdateQuery.execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		} else if (commandsParser.getQueryNo() == 3) { // delete
 			String tablename = commandsParser.getTableName();
 			String[] columns = commandsParser.getColumns();
 			String[] conditions = commandsParser.getconditions();
-			String[] values = commandsParser.getValues();
-
-			return delete(dataBaseFile, columns, conditions,tablename);
-
+		
+			executeUpdateQuery = new Delete(dataBaseFile, columns, conditions, tablename);
+			try {
+				return executeUpdateQuery.execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return 0;
 	}
 
-	private int delete(File tableFolder, String[] columns, String[] conditions,String tablename) {
-	 Delete delete = new Delete(tableFolder, columns, conditions, tablename);
-	 return delete.execute();
-		
-
-	}
-
-	private int update(File tableFolder, String[] columns, String[] conditions, String[] values,String tablename) {
-		Update update = new Update(tableFolder, columns, conditions, values,tablename);
-		return update.execute();
-	}
-
-	private int insert(File tableFolder, String[] columns, String[] values) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
-		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions,tablename);
-		return executeQuery.select();
+		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions, tablename);
+		return executeQuery.execute();
 
 	}
 	/*

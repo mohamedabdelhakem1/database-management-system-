@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ExecuteQuery {
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteQueryCommand;
+
+public class ExecuteQuery implements ExecuteQueryCommand {
 
 	private String[] columns;
 	private String[] conditions;
@@ -34,8 +36,8 @@ public class ExecuteQuery {
 		allTypes = reader.getTypes();
 
 	}
-
-	public Object[][] select() {
+	@Override
+	public Object[][] execute() {
 
 		if (columns == null && conditions == null) { // select all columns
 			return values;

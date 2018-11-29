@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQueryCommad;
 
-public class Delete implements ExecuteUpdateQuery {
+public class Delete implements ExecuteUpdateQueryCommad {
 	private File database;
 	private String[] columns;
 	private String[] conditions;
@@ -40,7 +40,7 @@ public class Delete implements ExecuteUpdateQuery {
 		allTypes = reader.getTypes();
 
 	}
-
+	@Override
 	public int execute() {
 		if (conditions == null) {
 			System.out.println("null");

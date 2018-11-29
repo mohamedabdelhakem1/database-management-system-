@@ -28,7 +28,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-public class ExecuteStructureQuerys {
+
+public class ExecuteStructureQuerys{
 	private final static String NS_PREFIX = "xs:";
 	private File dataBaseFile;
 	private String tableName;
@@ -175,5 +176,9 @@ public class ExecuteStructureQuerys {
 		}
 
 	}
+
+
+
+	
 
 }

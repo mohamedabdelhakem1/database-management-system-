@@ -9,9 +9,9 @@ import java.util.concurrent.CountDownLatch;
 import com.sun.rowset.internal.Row;
 import com.sun.xml.internal.ws.util.StringUtils;
 
-import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
+import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQueryCommad;
 
-public class Update implements ExecuteUpdateQuery {
+public class Update implements ExecuteUpdateQueryCommad {
 	private File database;
 	private String[] columns;
 	private String[] conditions;
@@ -48,7 +48,7 @@ public class Update implements ExecuteUpdateQuery {
 		new LinkedList<>();
 		Arrays.asList(allcolumns);
 	}
-
+	@Override
 	public int execute() {
 
 		if (conditions == null) {

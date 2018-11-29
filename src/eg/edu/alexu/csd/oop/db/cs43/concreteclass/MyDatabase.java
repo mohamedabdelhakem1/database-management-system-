@@ -131,15 +131,15 @@ public class MyDatabase implements Database {
 			String[] conditions = commandsParser.getconditions();
 			String[] values = commandsParser.getValues();
 
-			return delete(dataBaseFile, columns, conditions);
+			return delete(dataBaseFile, columns, conditions,tablename);
 
 		}
 
 		return 0;
 	}
 
-	private int delete(File tableFolder, String[] columns, String[] conditions) {
-	 Delete delete = new Delete(tableFolder, columns, conditions);
+	private int delete(File tableFolder, String[] columns, String[] conditions,String tablename) {
+	 Delete delete = new Delete(tableFolder, columns, conditions, tablename);
 	 return delete.execute();
 		
 
@@ -156,7 +156,7 @@ public class MyDatabase implements Database {
 	}
 
 	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
-		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions);
+		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions,tablename);
 		return executeQuery.select();
 
 	}

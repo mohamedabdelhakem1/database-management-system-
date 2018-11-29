@@ -7,7 +7,7 @@ import java.util.List;
 
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
 
-public class Delete  implements ExecuteUpdateQuery{
+public class Delete implements ExecuteUpdateQuery {
 	private File tableFolder;
 	private String[] columns;
 	private String[] conditions;
@@ -20,21 +20,21 @@ public class Delete  implements ExecuteUpdateQuery{
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
 
-	public Delete(File tableFolder, String[] columns, String[] conditions) {
+	public Delete(File database, String[] columns, String[] conditions, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
-		this.tableFolder = tableFolder;
+		this.tableFolder = database;
 
 		readXml = new ReadXml();
 		try {
-			Storedvalues = readXml.getArray(new File(tableFolder.getAbsolutePath()
-					+ System.getProperty("file.separator") + tableFolder.getName() + ".xml"));
+			Storedvalues = readXml.getArray(new File(database.getAbsolutePath() + System.getProperty("file.separator")
+					+ tablename + System.getProperty("file.separator") + tablename + ".xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		reader = new XSDReader();
-		reader.ReadXSD(
-				tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tableFolder.getName() + ".xsd");
+		reader.ReadXSD(database.getAbsolutePath() + System.getProperty("file.separator") + tablename
+				+ System.getProperty("file.separator") + tablename + ".xsd");
 		allcolumns = reader.getColumns();
 		allTypes = reader.getTypes();
 
@@ -94,7 +94,6 @@ public class Delete  implements ExecuteUpdateQuery{
 				returnedRows = new Object[newRows.size()][newRows.get(0).length];
 				returnedRows = newRows.toArray(returnedRows);
 
-			
 			} catch (Exception e1) {
 				returnedRows = null;
 			}

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ExecuteQuery {
-	
+
 	private String[] columns;
 	private String[] conditions;
 	private ReadXml readXml;
@@ -16,19 +16,20 @@ public class ExecuteQuery {
 	private String[] allTypes;
 	private ConditionsManipulation manipulation;
 	private ColumnsManipulation columnsManipulation;
-	public ExecuteQuery(File tableFolder, String[] columns, String[] conditions) {
+
+	public ExecuteQuery(File database, String[] columns, String[] conditions, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
 		readXml = new ReadXml();
 		try {
-			values = readXml.getArray(new File(tableFolder.getAbsolutePath() + System.getProperty("file.separator")
-					+ tableFolder.getName() + ".xml"));
+			values = readXml.getArray(new File(database.getAbsolutePath() + System.getProperty("file.separator")
+					+ tablename + System.getProperty("file.separator") + tablename + ".xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		reader = new XSDReader();
-		reader.ReadXSD(
-				tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tableFolder.getName() + ".xsd");
+		reader.ReadXSD(database.getAbsolutePath() + System.getProperty("file.separator") + tablename
+				+ System.getProperty("file.separator") + tablename + ".xsd");
 		allcolumns = reader.getColumns();
 		allTypes = reader.getTypes();
 
@@ -42,17 +43,17 @@ public class ExecuteQuery {
 		} else if (columns != null && conditions == null) { // select columns in columns array
 
 			Object[][] returnedvalues = new Object[values.length][columns.length];
-			
+
 			for (int i = 0; i < values.length; i++) {
 				int c = 0;
 				for (int j = 0; j < values[0].length; j++) {
-					for(int k = 0 ;k<columns.length;k++) {
-						if(columns[k].equalsIgnoreCase(allcolumns[j])) {
+					for (int k = 0; k < columns.length; k++) {
+						if (columns[k].equalsIgnoreCase(allcolumns[j])) {
 							returnedvalues[i][c] = values[i][j];
 							c++;
 						}
 					}
-					
+
 				}
 
 				if (c != columns.length) {
@@ -70,7 +71,7 @@ public class ExecuteQuery {
 		} else if (columns != null && conditions != null) {
 			manipulation = new ConditionsManipulation(values, conditions, allcolumns, allTypes);
 			try {
-				Object [][] filteredValues= manipulation.getArrayAfterCondiotions();
+				Object[][] filteredValues = manipulation.getArrayAfterCondiotions();
 				columnsManipulation = new ColumnsManipulation(filteredValues, allcolumns, columns);
 				return columnsManipulation.getSelectedColumns();
 			} catch (Exception e) {

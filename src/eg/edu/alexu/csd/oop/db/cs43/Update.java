@@ -24,22 +24,22 @@ public class Update implements ExecuteUpdateQuery {
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
 
-	public Update(File tableFolder, String[] columns, String[] conditions, String[] values, String tablename) {
+	public Update(File database, String[] columns, String[] conditions, String[] values, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
-		this.tableFolder = tableFolder;
+		this.tableFolder = database;
 
 		this.values = values;
 		readXml = new ReadXml();
 		try {
 			Storedvalues = readXml
-					.getArray(new File(tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tablename
+					.getArray(new File(database.getAbsolutePath() + System.getProperty("file.separator") + tablename
 							+ System.getProperty("file.separator") + tablename + ".xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		reader = new XSDReader();
-		reader.ReadXSD(tableFolder.getAbsolutePath() + System.getProperty("file.separator") + tablename
+		reader.ReadXSD(database.getAbsolutePath() + System.getProperty("file.separator") + tablename
 				+ System.getProperty("file.separator") + tablename + ".xsd");
 		allcolumns = reader.getColumns();
 		allTypes = reader.getTypes();

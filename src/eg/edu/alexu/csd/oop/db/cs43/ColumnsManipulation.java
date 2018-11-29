@@ -27,7 +27,6 @@ public class ColumnsManipulation {
 						c++;
 					}
 				}
-
 			}
 			if (c != selectedColumns.length) {
 				throw new Exception();

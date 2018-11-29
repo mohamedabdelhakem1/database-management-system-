@@ -27,7 +27,7 @@ public class ReadXml {
 		XSDReader reader = new XSDReader();
 	
 		reader.ReadXSD(tableFolder.getAbsolutePath() +File.separator+ tableFolder.getName() + ".xsd");
-		System.out.println(tableFolder.getAbsolutePath() +File.separator+ tableFolder.getName() + ".xsd");
+	//	System.out.println(tableFolder.getAbsolutePath() +File.separator+ tableFolder.getName() + ".xsd");
 		String[]allTypes = reader.getTypes();
 		Object[][] values = null;
 		int noOfRows = 0;

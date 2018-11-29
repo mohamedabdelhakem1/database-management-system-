@@ -16,7 +16,6 @@ public class CommandsParser {
 	private int Queryno;
 
 	public String[] ReturnString() {
-
 		return null;
 	}
 

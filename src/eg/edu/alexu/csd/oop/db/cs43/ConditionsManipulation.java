@@ -41,9 +41,9 @@ public class ConditionsManipulation {
 				String operand = conditions[j];
 				String operation = conditions[j + 1];
 				String value = conditions[j + 2];
-				 System.out.println(operand);
-				 System.out.println(operation);
-				 System.out.println(value);
+			//	 System.out.println(operand);
+			//	 System.out.println(operation);
+			//	 System.out.println(value);
 				if (operation.equals("=") || operation.equals("<") || operation.equals(">")) {
 					
 					foundOperation = true;
@@ -128,7 +128,7 @@ public class ConditionsManipulation {
 					
 				}
 				if (operand.equalsIgnoreCase("not") || FoundNot == 1) {
-					 System.out.println("not");
+					// System.out.println("not");
 					if (FoundNot == 1) {
 						FoundNot = 0;
 						addThisRowOrnot = !addThisRowOrnot;

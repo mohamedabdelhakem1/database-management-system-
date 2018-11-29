@@ -55,7 +55,7 @@ public class Insert implements ExecuteUpdateQueryCommad {
 		for (int i = 0; i < tableColumnsNames.length; ++i) {
 			int index = -2;
 			if(columnsNames.length == 0) {
-				System.out.println("length");
+			//	System.out.println("length");
 				index = i;
 			}else {
 				

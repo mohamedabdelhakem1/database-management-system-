@@ -43,7 +43,7 @@ public class Delete implements ExecuteUpdateQueryCommad {
 	@Override
 	public int execute() {
 		if (conditions == null) {
-			System.out.println("null");
+		//	System.out.println("null");
 
 			writeXml = new WriteXml();
 			try {

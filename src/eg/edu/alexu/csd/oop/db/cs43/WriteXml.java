@@ -57,7 +57,7 @@ public class WriteXml {
 			DOMSource domsource = new DOMSource(d);
 			File xml = new File(
 					tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tablefolder.getName() + ".xml");
-			System.out.println(xml.getAbsolutePath());
+		//	System.out.println(xml.getAbsolutePath());
 			if (xml.exists()) {
 				xml.delete();
 			}

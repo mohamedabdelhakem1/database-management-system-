@@ -12,7 +12,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
 
 public class Update implements ExecuteUpdateQuery {
-	private File tableFolder;
+	private File database;
 	private String[] columns;
 	private String[] conditions;
 	private String[] values;
@@ -23,12 +23,13 @@ public class Update implements ExecuteUpdateQuery {
 	private String[] allTypes;
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
-
+	private File tablefolder;
 	public Update(File database, String[] columns, String[] conditions, String[] values, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
-		this.tableFolder = database;
-
+		this.database = database;
+		tablefolder = new File(database.getAbsolutePath() + System.getProperty("file.separator")
+		+ tablename );
 		this.values = values;
 		readXml = new ReadXml();
 		try {
@@ -52,7 +53,7 @@ public class Update implements ExecuteUpdateQuery {
 
 		if (conditions == null) {
 			// affect all the rows
-
+			
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int c = 0;
 				for (int j = 0; j < Storedvalues[0].length; j++) {
@@ -60,6 +61,7 @@ public class Update implements ExecuteUpdateQuery {
 						if (columns[k].equalsIgnoreCase(allcolumns[j])) {
 							Storedvalues[i][j] = values[k];
 							c++;
+							System.out.println("up");
 						}
 					}
 				}
@@ -69,7 +71,7 @@ public class Update implements ExecuteUpdateQuery {
 			}
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tableFolder);
+				writeXml.writeTable(Storedvalues, allcolumns, tablefolder);
 			} catch (Exception e) {
 				return 0;
 			}
@@ -118,7 +120,7 @@ public class Update implements ExecuteUpdateQuery {
 			}
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tableFolder);
+				writeXml.writeTable(Storedvalues, allcolumns, tablefolder);
 			} catch (Exception e) {
 				return 0;
 			}

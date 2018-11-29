@@ -8,7 +8,7 @@ import java.util.List;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQuery;
 
 public class Delete implements ExecuteUpdateQuery {
-	private File tableFolder;
+	private File database;
 	private String[] columns;
 	private String[] conditions;
 
@@ -19,12 +19,13 @@ public class Delete implements ExecuteUpdateQuery {
 	private String[] allTypes;
 	private ConditionsManipulation manipulation;
 	private WriteXml writeXml;
-
+	private File tablefolder;
 	public Delete(File database, String[] columns, String[] conditions, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
-		this.tableFolder = database;
-
+		this.database = database;
+		tablefolder = new File(database.getAbsolutePath() + System.getProperty("file.separator")
+					+ tablename );
 		readXml = new ReadXml();
 		try {
 			Storedvalues = readXml.getArray(new File(database.getAbsolutePath() + System.getProperty("file.separator")
@@ -46,7 +47,7 @@ public class Delete implements ExecuteUpdateQuery {
 
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(null, allcolumns, tableFolder);
+				writeXml.writeTable(null, allcolumns, tablefolder);
 			} catch (Exception e) {
 				// e.printStackTrace();
 				return 0;
@@ -99,7 +100,7 @@ public class Delete implements ExecuteUpdateQuery {
 			}
 			writeXml = new WriteXml();
 			try {
-				writeXml.writeTable(returnedRows, allcolumns, tableFolder);
+				writeXml.writeTable(returnedRows, allcolumns, tablefolder);
 			} catch (Exception e) {
 				return 0;
 			}

@@ -19,7 +19,7 @@ public class Testing {
 		database.createDatabase("sample" + System.getProperty("file.separator") + "testDB"
 				, false);
 
-		String s = "INSERT INTO  table_name1(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)";
+		String s = "INSERT INTO  table_name1(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'valudsdes', 4)";
 		try {
 			database.executeUpdateQuery(s);
 

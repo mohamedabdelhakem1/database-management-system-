@@ -21,12 +21,18 @@ public class CommandsParser {
 
 	public String[] validateCommand(String command) {
 		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
+		
+		if(command.endsWith(";")) {
+			command = command.replaceAll("(\\s*([;]{1,})\\s*)(?=([^']*'[^']*')*[^']*$)", "");
+		}
 		String pattern = "((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
 		// String pattern =
 		// "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
-
+		for(String s :strs) {
+			System.out.println(s);
+		}
 		if (strs[0].equalsIgnoreCase("create")) {
 			if (strs[1].equalsIgnoreCase("database")) {
 				if (strs.length == 3) {
@@ -45,11 +51,13 @@ public class CommandsParser {
 				columns = new LinkedList<String>();
 				for (int i = 3; i < strs.length; i = i + 2) {
 					columns.add(strs[i]);
+					System.out.println(strs[i]);
 				}
 				datatypes = new LinkedList<String>();
 				for (int i = 4; i < strs.length; i = i + 2) {
 					if (strs[i].equalsIgnoreCase("varchar") || strs[i].equalsIgnoreCase("int")) {
 						datatypes.add(strs[i]);
+						System.out.println(strs[i]);
 					} else {
 						columns = null;
 						datatypes = null;

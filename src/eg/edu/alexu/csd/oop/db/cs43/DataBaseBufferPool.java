@@ -43,7 +43,7 @@ public class DataBaseBufferPool {
 	}
 
 	public void unloadCache() throws SQLException {
-
+		System.out.println(DatabaseCache.size());
 		for (Entry<File, DatabaseData> e : DatabaseCache.entrySet()) {
 			DatabaseData databaseData = e.getValue();
 			Map<String, XMLData> xmls = databaseData.getTables();

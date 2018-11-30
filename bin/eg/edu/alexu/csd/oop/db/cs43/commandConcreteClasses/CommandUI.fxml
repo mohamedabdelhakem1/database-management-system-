@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="297.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses.UIController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="input" layoutX="11.0" layoutY="29.0" onKeyPressed="#enterCommand" prefHeight="25.0" prefWidth="377.0" promptText="Enter Command Here" />
+            <ScrollPane layoutX="13.0" layoutY="73.0" prefHeight="202.0" prefViewportHeight="200.0" prefViewportWidth="200.0" prefWidth="371.0">
+               <content>
+                  <TextArea fx:id="output" layoutX="99.0" layoutY="73.0" prefHeight="200.0" prefWidth="369.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

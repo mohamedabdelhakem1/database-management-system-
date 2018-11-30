@@ -94,7 +94,6 @@ public class ExecuteStructureQuerys {
 			return false;
 		}
 		tablefolder.mkdirs();
-		
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();

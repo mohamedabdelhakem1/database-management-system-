@@ -21,11 +21,12 @@ public class CommandsParser {
 
 	public String[] validateCommand(String command) {
 		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
-		
+		command = command.replaceAll("(\\s*([)]{1,})\\s*)", ")");
 		if(command.endsWith(";")) {
 			command = command.replaceAll("(\\s*([;]{1,})\\s*)(?=([^']*'[^']*')*[^']*$)", "");
 		}
 		String pattern = "((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
+	
 		// String pattern =
 		// "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);

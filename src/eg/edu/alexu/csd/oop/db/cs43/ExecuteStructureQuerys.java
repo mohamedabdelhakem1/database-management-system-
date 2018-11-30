@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.xml.transform.sax.*;
 import javax.print.Doc;
@@ -92,7 +93,8 @@ public class ExecuteStructureQuerys {
 		if (tablefolder.exists()) {
 			return false;
 		}
-		tablefolder.mkdir();
+		tablefolder.mkdirs();
+		
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -107,6 +109,11 @@ public class ExecuteStructureQuerys {
 					tablefolder.getAbsolutePath() + System.getProperty("file.separator") + tableName + ".xml");
 			StreamResult streamResult = new StreamResult(xmlFile);
 			transformer.transform(source, streamResult);
+			//DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+			//XMLData data = pool.getTable(dataBaseFile, tableName);
+			//Map<String, Object> map = data.getXml();
+			
+			
 		} catch (DOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

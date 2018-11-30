@@ -16,7 +16,7 @@ public  class testingXml {
 
 	public static void main(String[] args) throws Exception {
 
-		Object[][] values = new Object[][] {{15,10,2},{4,3,6},{2,8,9}};
+	/*	Object[][] values = new Object[][] {{15,10,2},{4,3,6},{2,8,9}};
 		String[]allcolumns = new String[] {"column1","column2","column3"};
 		String[]allTypes = {"Column1"};
 		ColumnsManipulation columnsManipulation = new ColumnsManipulation(values, allcolumns, allTypes);
@@ -27,7 +27,7 @@ public  class testingXml {
 			}
 			
 		}
-		
+		*/
 
 	}
 

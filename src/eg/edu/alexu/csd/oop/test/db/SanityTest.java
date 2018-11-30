@@ -6,6 +6,7 @@ import java.io.File;
 import org.junit.*;
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs43.DataBaseBufferPool;
 import eg.edu.alexu.csd.oop.test.TestRunner;
 
 public class SanityTest {
@@ -16,7 +17,7 @@ public class SanityTest {
 
 	private File createDatabase(Database db, String name, boolean drop){
 		String path = db.createDatabase("sample" + System.getProperty("file.separator") + name, drop); // create database
-		//System.out.println(path);
+		System.out.println(path);
 		Assert.assertNotNull("Failed to create database", path);
 		File dbDir = new File(path);
 		Assert.assertTrue("Database directory is not found or not a directory", dbDir.exists() && dbDir.isDirectory());
@@ -210,11 +211,12 @@ public class SanityTest {
 
 			int count1 = db.executeUpdateQuery("INSERT INTO table_name1(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)");
 			Assert.assertNotEquals("Insert returned zero rows", 0, count1);
+			
 			int count2 = db.executeUpdateQuery("INSERT INTO table_name1(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 5)");
 			Assert.assertNotEquals("Insert returned zero rows", 0, count2);
 			int count3 = db.executeUpdateQuery("INSERT INTO table_name1(column_name1, COLUMN_NAME3, column_NAME2) VALUES ('value2', 'value4', 6)");
 			Assert.assertNotEquals("Insert returned zero rows", 0, count3);
-
+			
 			int count4 = db.executeUpdateQuery("DELETE From table_name1  WHERE coLUmn_NAME2=4");
 			Assert.assertEquals("Delete returned wrong number", 1, count4);
 
@@ -231,12 +233,13 @@ public class SanityTest {
 			Assert.assertEquals("Wrong number of rows", 2, result2.length);
 			Assert.assertEquals("Wrong number of columns", 3, result2[0].length);
 			Object column_2_object = result2[0][1];
-			System.out.println(column_2_object);
+			
 			if (column_2_object instanceof String)
 				fail("This should be 'Integer', but found 'String'!");
 			else if (column_2_object instanceof Integer) {
 				int column_2 = (Integer) column_2_object;
 				Assert.assertEquals("Select did't return the updated record!", 10, column_2);
+			
 			}
 			else
 				fail("This should be 'Integer', but what is found can't be identified!");

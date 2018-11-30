@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs43;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.xml.sax.XMLReader;
@@ -21,8 +22,8 @@ public class Insert implements ExecuteUpdateQueryCommad {
 		this.columnsNames = columnsnames;
 	}
 
-	public int execute() throws SQLException{
-		if(columnsValues.length == 0 ||DataBaseFile == null) {
+	public int execute() throws SQLException {
+		if (columnsValues.length == 0 || DataBaseFile == null) {
 			return 0;
 		}
 		File tablefolder = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName);
@@ -31,17 +32,16 @@ public class Insert implements ExecuteUpdateQueryCommad {
 			return 0;
 		}
 
-		XSDReader xsdReader = new XSDReader();
-		xsdReader.ReadXSD(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName
-				+ System.getProperty("file.separator") + tableName + ".xsd");
+		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		XMLData xml = pool.getTable(DataBaseFile, tableName);
+		Map<String, Object> map = xml.getXml();
+		String[] tableColumnsNames = (String[]) map.get("columns");
+		String[] alltypes = (String[]) map.get("types");
 
-		String[] tableColumnsNames = xsdReader.getColumns();
-		String[] alltypes = xsdReader.getTypes();
-		ReadXml readXml = new ReadXml();
 		File tableXmlFile = new File(DataBaseFile.getAbsolutePath() + System.getProperty("file.separator") + tableName
 				+ System.getProperty("file.separator") + tableName + ".xml");
 
-		Object[][] xmlData = readXml.getArray(tableXmlFile);
+		Object[][] xmlData = (Object[][]) map.get("array");
 
 		if (xmlData == null) {
 			xmlData = new Object[0][0];
@@ -51,25 +51,25 @@ public class Insert implements ExecuteUpdateQueryCommad {
 		if (tableColumnsNames.length != columnsValues.length) {
 			return 0;
 		}
-		
+
 		for (int i = 0; i < tableColumnsNames.length; ++i) {
 			int index = -2;
-			if(columnsNames.length == 0) {
-			//	System.out.println("length");
+			if (columnsNames.length == 0) {
+				// System.out.println("length");
 				index = i;
-			}else {
-				
-				 index = getIndex(tableColumnsNames[i], columnsNames);// query has column name does not exist
+			} else {
+
+				index = getIndex(tableColumnsNames[i], columnsNames);// query has column name does not exist
 			}
-			
+
 			if (index == -1) {// query has column name does not exist
 				return 0;
 			}
-			
+
 			if (alltypes[i].equalsIgnoreCase("string")) {
 				if (columnsValues[index].startsWith("'") && columnsValues[index].endsWith("'")) {
 					newXmlData[xmlData.length][i] = columnsValues[index];
-					
+
 				} else {
 					return 0;
 				}
@@ -77,7 +77,7 @@ public class Insert implements ExecuteUpdateQueryCommad {
 				if (!columnsValues[index].startsWith("'") || !columnsValues[index].endsWith("'")) {
 					try {
 						int val = Integer.valueOf(columnsValues[index]);
-						newXmlData[xmlData.length][i] = (Object)val;
+						newXmlData[xmlData.length][i] = (Object) val;
 					} catch (Exception e) {
 						return 0;
 					}
@@ -85,19 +85,17 @@ public class Insert implements ExecuteUpdateQueryCommad {
 					return 0;
 				}
 			}
-			
+
 		}
-		WriteXml writeXml = new WriteXml();
-		writeXml.writeTable(newXmlData, tableColumnsNames, tablefolder);
-		XmlValidation validation = new XmlValidation();
-		try {
-			validation.validateXml(tablefolder);
-
-		} catch (Exception e) {
-
-			writeXml.writeTable(xmlData, tableColumnsNames, tablefolder);
+		map.put("array", newXmlData);
+	/*	Object[][] o = (Object[][]) map.get("array");
+		for (int i = 0; i < o.length; i++) {
+			for (int j = 0; j < o[0].length; j++) {
+				System.out.println(o[i][j]);
+			}
 		}
-
+		System.out.println("");
+	 */
 		return 1;
 	}
 

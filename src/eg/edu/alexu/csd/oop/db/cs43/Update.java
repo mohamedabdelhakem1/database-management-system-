@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import com.sun.corba.se.impl.orbutil.RepositoryIdUtility;
@@ -18,35 +19,35 @@ public class Update implements ExecuteUpdateQueryCommad {
 	private String[] columns;
 	private String[] conditions;
 	private String[] values;
-	private ReadXml readXml;
+	
 	private Object[][] Storedvalues;
-	private XSDReader reader;
+	
 	private String[] allcolumns;
 	private String[] allTypes;
 	private ConditionsManipulation manipulation;
-	private WriteXml writeXml;
-	private File tablefolder;
 
-	public Update(File database, String[] columns, String[] conditions, String[] values, String tablename) {
+	private File tablefolder;
+	private Map<String, Object> map;
+	public Update(File database, String[] columns, String[] conditions, String[] values, String tablename) throws SQLException {
 		this.columns = columns;
 		this.conditions = conditions;
 		this.database = database;
 		tablefolder = new File(database.getAbsolutePath() + System.getProperty("file.separator") + tablename);
 		this.values = values;
-		readXml = new ReadXml();
-		try {
-			
-			Storedvalues = readXml.getArray(new File(database.getAbsolutePath() + System.getProperty("file.separator")
-					+ tablename + System.getProperty("file.separator") + tablename + ".xml"));
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		//
+		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		XMLData xml = pool.getTable(database, tablename);
+		
+		 try {
+			map = xml.getXml();
+		} catch (NullPointerException e) {
+			throw new SQLException();
 		}
-		reader = new XSDReader();
-		reader.ReadXSD(database.getAbsolutePath() + System.getProperty("file.separator") + tablename
-				+ System.getProperty("file.separator") + tablename + ".xsd");
-		allcolumns = reader.getColumns();
-		allTypes = reader.getTypes();
+		//
+		Storedvalues = (Object[][]) map.get("array");
+		
+		allcolumns = (String[]) map.get("columns");
+		allTypes = (String[]) map.get("types");
 
 		new LinkedList<>();
 		Arrays.asList(allcolumns);
@@ -54,13 +55,13 @@ public class Update implements ExecuteUpdateQueryCommad {
 
 	@Override
 	public int execute() throws SQLException {
-		
-		if(Storedvalues == null) {
+
+		if (Storedvalues == null) {
 			throw new SQLException();
 		}
 		if (conditions == null) {
 			// affect all the rows
-			
+
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int c = 0;
 				for (int j = 0; j < Storedvalues[0].length; j++) {
@@ -75,8 +76,7 @@ public class Update implements ExecuteUpdateQueryCommad {
 								}
 							} else if (allTypes[j].equalsIgnoreCase("integer")) {
 								if ((!(values[k].startsWith("'"))) && (!values[k].endsWith("'"))) {
-									 
-									Storedvalues[i][j] = values[k];
+									Storedvalues[i][j] = Integer.valueOf(values[k]);
 									c++;
 								} else {
 									return 0;
@@ -90,9 +90,9 @@ public class Update implements ExecuteUpdateQueryCommad {
 					return 0;
 				}
 			}
-			writeXml = new WriteXml();
+			
 			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tablefolder);
+				map.put("array", Storedvalues);
 			} catch (Exception e) {
 				return 0;
 			}
@@ -105,14 +105,13 @@ public class Update implements ExecuteUpdateQueryCommad {
 			try {
 
 				RowsTobeAffected = manipulation.getArrayAfterCondiotions();
-				if(RowsTobeAffected == null) {
+				if (RowsTobeAffected == null) {
 					return 0;
 				}
 			} catch (Exception e) {
 			}
 			int countAffectedRows = 0;
-			
-			
+
 			for (int i = 0; i < Storedvalues.length; i++) {
 				int count = 0;
 				for (int k = 0; k < RowsTobeAffected.length; k++) {
@@ -156,12 +155,8 @@ public class Update implements ExecuteUpdateQueryCommad {
 					}
 				}
 			}
-			writeXml = new WriteXml();
-			try {
-				writeXml.writeTable(Storedvalues, allcolumns, tablefolder);
-			} catch (Exception e) {
-				return 0;
-			}
+			map.put("array", Storedvalues);
+			
 			return countAffectedRows;
 		}
 		return 0;

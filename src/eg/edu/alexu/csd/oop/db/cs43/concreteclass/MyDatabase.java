@@ -5,10 +5,12 @@ import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
 
+import com.sun.istack.internal.Pool;
 import com.sun.org.apache.regexp.internal.recompile;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs43.CommandsParser;
+import eg.edu.alexu.csd.oop.db.cs43.DataBaseBufferPool;
 import eg.edu.alexu.csd.oop.db.cs43.Delete;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery;
 import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
@@ -24,6 +26,15 @@ public class MyDatabase implements Database {
 	
 
 	public MyDatabase() {
+		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		try {
+			pool.unloadCache();
+			pool.destroy();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		commandsParser = new CommandsParser();
 	}
 
@@ -161,6 +172,7 @@ public class MyDatabase implements Database {
 		return executeQuery.execute();
 
 	}
+	
 	/*
 	 * private boolean dropTable(String string) { int count = 0; File[] files =
 	 * dataBaseFile.listFiles(); for (int i = 0; i < files.length; i++) { if

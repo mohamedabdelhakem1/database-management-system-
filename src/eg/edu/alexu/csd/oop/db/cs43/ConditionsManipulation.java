@@ -181,8 +181,19 @@ public class ConditionsManipulation {
 		
 		if (objects.size() != 0) {
 			Object[][] returnedrows = new Object[objects.size()][objects.get(0).size()];
+			System.out.println(returnedrows.length);
 			for (int i = 0; i < objects.size(); i++) {
-				returnedrows[i] = objects.get(i).toArray(returnedrows[i]);
+				
+				for(int j =0 ;j<objects.get(0).size() ;j++ ) {
+					if(allTypes[j].equalsIgnoreCase("integer")) {
+						returnedrows[i][j] = Integer.valueOf(String.valueOf( objects.get(i).get(j)));
+						
+					}else if(allTypes[j].equalsIgnoreCase("string")) {
+						returnedrows[i][j] =  objects.get(i).get(j);
+						
+					}
+				}
+				
 			}
 			return returnedrows;
 		}	

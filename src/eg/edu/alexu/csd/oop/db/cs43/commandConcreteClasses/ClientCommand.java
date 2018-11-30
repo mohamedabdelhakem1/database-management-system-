@@ -39,20 +39,23 @@ public class ClientCommand implements CommandFactory {
 
 		if (strs[0].equalsIgnoreCase("create")) {
 			if (strs[1].equalsIgnoreCase("database")) {
-				strategy = new StructureQueryRequest(database);
+				strategy = new StructureQueryRequest(database);	
 				strategy.getSpecifiedRequest(textArea, command);
 			} else if (strs[1].equalsIgnoreCase("table")) {
 				strategy = new StructureQueryRequest(database);
-			}strategy.getSpecifiedRequest(textArea, command);
+				strategy.getSpecifiedRequest(textArea, command);
+				System.out.println();
+			}
 		} else if (strs[0].equalsIgnoreCase("drop")) {
 			strategy = new StructureQueryRequest(database);
 			strategy.getSpecifiedRequest(textArea, command);
 		} else if (strs[0].equalsIgnoreCase("delete") || strs[0].equalsIgnoreCase("insert")
 				|| (strs[0].equalsIgnoreCase("update"))) {
 			
-			pool.unloadCache();
+			
 			strategy = new UpdateQueryRequest(database);
 			strategy.getSpecifiedRequest(textArea, command);
+			pool.unloadCache();
 		} else if (strs[0].equalsIgnoreCase("select")) {
 			strategy = new SelectQueryRequest(database);
 			strategy.getSpecifiedRequest(textArea, command);

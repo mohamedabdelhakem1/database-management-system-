@@ -21,48 +21,8 @@ public class CommandsParser {
 	}
 
 	public String[] validateCommand(String command) {
-		/*
-		 * String r1 =
-		 * "^(\\s*)(SELECT\\s* \\*|Delete)(\\s+)(FROM)(\\s+)(\\b.+\\b)(\\s+)(where)(\\s+)(\\b.+\\b)(\\s*)"
-		 * ; // done1 String r2 =
-		 * "^(\\s*)(SELECT\\s* \\*|Delete)(\\s+)(FROM)(\\s+)(\\b.+\\b)(\\s*)"; // done2
-		 * String r3 =
-		 * "^(\\s*)(UPDATE)(\\s+)(\\b.+\\b)(\\s+)(Set)(\\s+)(\\b.+\\b)(\\s+)(where)(\\s+)(\\b.+\\b)(\\s*)";
-		 * // done3 String r4 =
-		 * "^(\\s*)(UPDATE)(\\s+)(\\b.+\\b)(\\s+)(Set)(\\s+)(\\b.+\\b)(\\s*)"; // done4
-		 * String r5 =
-		 * "^(\\s*)(DROP\\s* TABLE|CREATE\\s* DATABASE|DROP\\s* DATABASE)(\\s+)(\\b.+\\b)(\\s*)$"
-		 * ; // done0String r6 =
-		 * "^(\\s*)(SELECT)(\\s+)(\\b.+\\b)(\\s+)(FROM)(\\s+)(\\b.+\\b)(\\s+)(WHERE)(\\s+)(\\b.+\\b)";
-		 * // done-2 String r6 =
-		 * "^(\\s*)(SELECT)(\\s+)(\\b.+\\b)(\\s+)(FROM)(\\s+)(\\b.+\\b)(\\s+)(WHERE)(\\s+)(\\b.+\\b)";
-		 * // done-2 String r7 =
-		 * "^(\\s*)(SELECT)(\\s+)(\\b.+\\b)(\\s+)(FROM)(\\s+)(\\b.+\\b)(\\s*)"; //
-		 * done-3 String r8 =
-		 * "^(\\s*)(INSERT)(\\s+)(INTO)(\\s+)(\\b.+\\b)(\\s+)(VALUES)(\\s*)([(]{1}.[^(]*[)])";
-		 * // done-4 String r9 =
-		 * "^(\\s*)(INSERT)(\\s+)(INTO)(\\s+)(\\b.+\\b)(\\s+)([(]{1}.[^(]*[)]{1})(\\s*)(VALUES)(\\s*)([(]{1}.[^(]*[)]{1})";
-		 * // done-5 String r10 =
-		 * "^(\\s*)(CREATE\\s* TABLE)(\\s+)((\\b.+\\b))([(]{1}.[^(]*[)]{1})";//done-1
-		 * Pattern p1 = Pattern.compile(r1, Pattern.CASE_INSENSITIVE); Matcher m1 =
-		 * p1.matcher(command); Pattern p2 = Pattern.compile(r2,
-		 * Pattern.CASE_INSENSITIVE); Matcher m2 = p2.matcher(command); Pattern p3 =
-		 * Pattern.compile(r3, Pattern.CASE_INSENSITIVE); Matcher m3 =
-		 * p3.matcher(command); Pattern p4 = Pattern.compile(r4,
-		 * Pattern.CASE_INSENSITIVE); Matcher m4 = p4.matcher(command); Pattern p5 =
-		 * Pattern.compile(r5, Pattern.CASE_INSENSITIVE); Matcher m5 =
-		 * p5.matcher(command); Pattern p6 = Pattern.compile(r6,
-		 * Pattern.CASE_INSENSITIVE); Matcher m6 = p6.matcher(command); Pattern p7 =
-		 * Pattern.compile(r7, Pattern.CASE_INSENSITIVE); Matcher m7 =
-		 * p7.matcher(command); Pattern p8 = Pattern.compile(r8,
-		 * Pattern.CASE_INSENSITIVE); Matcher m8 = p8.matcher(command); Pattern p9 =
-		 * Pattern.compile(r9, Pattern.CASE_INSENSITIVE); Matcher m9 =
-		 * p9.matcher(command); Pattern p10 = Pattern.compile(r10,
-		 * Pattern.CASE_INSENSITIVE); Matcher m10= p10.matcher(command); if (!m1.find()
-		 * && !m2.find() && !m3.find() && !m4.find() && !m5.find() && !m6.find() &&
-		 * !m7.find() && !m8.find() && !m9.find()&& !m10.find()) { Queryno =0; return
-		 * null; }
-		 */
+		
+	
 
 		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
 		while (command.indexOf("(") > 0 && command.indexOf(")") > 0) {
@@ -72,8 +32,7 @@ public class CommandsParser {
 		if(command.indexOf("(")>0||command.indexOf(")") > 0) {
 			return null;
 		}
-		// command = command.replaceAll("(\\s*([)]{1,})\\s*)", " ");
-		// command = command.replaceAll("(\\s*([(]{1,})\\s*)", " ");
+		
 		if (command.endsWith(";")) {
 			command = command.replaceAll("(\\s*([;]{1,})\\s*)(?=([^']*'[^']*')*[^']*$)", "");
 		}

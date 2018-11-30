@@ -1,5 +1,8 @@
 package eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses;
 
+import java.sql.SQLException;
+
+import eg.edu.alexu.csd.oop.db.cs43.DataBaseBufferPool;
 import eg.edu.alexu.csd.oop.db.cs43.concreteclass.CommandFactory;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,7 +21,7 @@ public class UIController {
 	public UIController() {
 		commandFactory = new ClientCommand();
 	}
-
+	
 	@FXML
 	public void enterCommand(KeyEvent e) throws Exception {
 		if (e.getCode() == KeyCode.ENTER) {
@@ -32,7 +35,27 @@ public class UIController {
 			}
 		}
 		
-		
-		 
 	}
+	public void Save() {
+		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		try {
+			pool.unloadCache();
+			pool.destroy();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

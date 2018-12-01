@@ -27,6 +27,7 @@ public class MyDatabase implements Database, Singleton {
 	private ExecuteUpdateQueryCommad executeUpdateQuery;
 	private ExecuteStructureQuerys executeStructureQuerys;
 	private ExecuteQueryCommand executeQuery;
+
 	public MyDatabase() {
 		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
 		try {
@@ -100,6 +101,9 @@ public class MyDatabase implements Database, Singleton {
 
 			return executeStructureQuerys.createTable();
 		} else if (queryNo == 6) {
+
+			dataBaseFile = new File(commandsParser.getTableNameOrDatabase().toLowerCase());
+			executeStructureQuerys.setDataBaseFile(dataBaseFile);
 			return executeStructureQuerys.dropDataBase();
 		} else if (queryNo == 7) {
 			executeStructureQuerys.setTableName(commandsParser.getTableNameOrDatabase().toLowerCase());

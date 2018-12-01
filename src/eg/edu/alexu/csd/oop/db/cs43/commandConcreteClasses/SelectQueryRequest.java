@@ -19,11 +19,12 @@ public class SelectQueryRequest implements CommandRequestStrategy {
 	public void getSpecifiedRequest(TextArea textArea, String command) {
 		try {
 			textArea.setText("");
+			
 			Object[][] output = database.executeQuery(command);
 			for (int i = 0; i < output.length; i++) {
 				for (int j = 0; j < output[0].length; j++) {
 					
-					textArea.appendText((String) output[i][j]); 
+					textArea.appendText(String.valueOf( output[i][j])); 
 					textArea.appendText("\t");
 				}
 				textArea.appendText("\n");

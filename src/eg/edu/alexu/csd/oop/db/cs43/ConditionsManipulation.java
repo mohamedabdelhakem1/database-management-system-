@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 public class ConditionsManipulation {
 	private String[] allcolumns;

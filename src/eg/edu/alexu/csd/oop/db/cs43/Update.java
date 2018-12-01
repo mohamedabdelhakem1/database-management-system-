@@ -28,6 +28,7 @@ public class Update implements ExecuteUpdateQueryCommad {
 
 	private File tablefolder;
 	private Map<String, Object> map;
+	private DataBaseBufferPool pool;
 	public Update(File database, String[] columns, String[] conditions, String[] values, String tablename) throws SQLException {
 		this.columns = columns;
 		this.conditions = conditions;
@@ -35,7 +36,7 @@ public class Update implements ExecuteUpdateQueryCommad {
 		tablefolder = new File(database.getAbsolutePath() + System.getProperty("file.separator") + tablename);
 		this.values = values;
 		//
-		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		pool = DataBaseBufferPool.getInstance();
 		XMLData xml = pool.getTable(database, tablename);
 		
 		 try {

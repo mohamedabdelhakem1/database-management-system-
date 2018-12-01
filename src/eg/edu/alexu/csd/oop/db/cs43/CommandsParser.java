@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.oop.db.cs43;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.management.Query;
@@ -20,17 +21,30 @@ public class CommandsParser {
 	}
 
 	public String[] validateCommand(String command) {
-		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
 		
-		if(command.endsWith(";")) {
+	
+
+		command = command.replaceAll("(\\s*([=]{1,})\\s*)", "=");
+		while (command.indexOf("(") > 0 && command.indexOf(")") > 0) {
+			command = command.replaceFirst("(\\s*([)]{1,})\\s*)", " ");
+			command = command.replaceFirst("(\\s*([(]{1,})\\s*)", " ");
+		}
+		if(command.indexOf("(")>0||command.indexOf(")") > 0) {
+			return null;
+		}
+		
+		if (command.endsWith(";")) {
 			command = command.replaceAll("(\\s*([;]{1,})\\s*)(?=([^']*'[^']*')*[^']*$)", "");
 		}
-		String pattern = "((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
+		String pattern = "(([\\s,\\s]{1,})|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
+		// String pattern =
+		// "((\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|([\\s=\\s]{1,}))(?=([^']*'[^']*')*[^']*$)";
+
 		// String pattern =
 		// "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s,\\s]{1,})|(([)]{1})\\s*)|(\\s*([=]{1,})\\s*)";
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
-		for(String s :strs) {
+		for (String s : strs) {
 			System.out.println(s);
 		}
 		if (strs[0].equalsIgnoreCase("create")) {
@@ -115,10 +129,10 @@ public class CommandsParser {
 				}
 				Queryno = 1;
 				if ((values.size() != 0 && columns.size() != 0 && values.size() == columns.size())) {
-					
-				}else if(values.size() != 0 && columns.size() == 0){
-					
-				}else {
+
+				} else if (values.size() != 0 && columns.size() == 0) {
+
+				} else {
 					columns = null;
 					values = null;
 					Queryno = 0;

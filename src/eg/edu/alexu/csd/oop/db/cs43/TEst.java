@@ -1,19 +1,15 @@
-	package eg.edu.alexu.csd.oop.db.cs43;
-	
-	
-	
-	import java.util.regex.Matcher;
-	import java.util.regex.Pattern;
-	
-	import org.hamcrest.core.IsInstanceOf;
-	
-	import eg.edu.alexu.csd.oop.db.Database;
-	
-	public class TEst {
-	
-		
-	
-		public static void main(String[] args) {
+package eg.edu.alexu.csd.oop.db.cs43;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.hamcrest.core.IsInstanceOf;
+
+import eg.edu.alexu.csd.oop.db.Database;
+
+public class TEst {
+
+	public static void main(String[] args) {
 	
 			
 			String s ="CREATE   TABLE   table_name1(column_name1 varchar , column_name2    int,  column_name3 varchar)       ";
@@ -56,7 +52,8 @@
 			  		System.out.println(m.group(13));
 			  		System.out.println(m.group(14));
 			  	}
-			 //     pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s*,\\s*]{1,})|(([)]{1})\\s*)";
-			 
-		}
-	
+	// pattern = "(^\\s+)|(\\s*([(]{1})\\s*)|([\\s*,\\s*]{1,})|(([)]{1})\\s*)";
+
+}
+
+// karimatef9@bitbucket.org/mohamedmohamed1/dbms.git

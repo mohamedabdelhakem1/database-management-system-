@@ -35,7 +35,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 public class ExecuteStructureQuerys {
 	private final static String NS_PREFIX = "xs:";

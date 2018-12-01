@@ -36,7 +36,7 @@ public class DataBaseBufferPool implements Singleton {
 							DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
 							try {
 								pool.unloadCache();
-							
+
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

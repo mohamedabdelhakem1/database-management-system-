@@ -18,8 +18,9 @@ public class DataBaseBufferPool implements Singleton {
 	private static DataBaseBufferPool pool;
 	private static Map<File, DatabaseData> DatabaseCache;
 	private static int count = 0;
-	private static Thread thread ;
-	private static long startTime ;
+	private static Thread thread;
+	private static long startTime;
+
 	private DataBaseBufferPool() {
 		startTime = System.currentTimeMillis();
 	}
@@ -31,20 +32,20 @@ public class DataBaseBufferPool implements Singleton {
 			Runnable runnable = new Runnable() {
 				public void run() {
 					while (true) {
-						if (System.currentTimeMillis() - startTime >= 50000) {
-							startTime = System.currentTimeMillis();
-							DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
-							try {
-								pool.unloadCache();
 
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+						DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+						try {
+							synchronized (DatabaseCache) {
+								pool.CheckCache();
 							}
-
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+
 					}
 				}
+
 			};
 			thread = new Thread(runnable);
 			thread.start();
@@ -53,23 +54,24 @@ public class DataBaseBufferPool implements Singleton {
 	}
 
 	public XMLData getTable(File databasename, String TableName) {
+		synchronized (DatabaseCache) {
+			DatabaseData data;
 
-		DatabaseData data;
-		if (DatabaseCache.get(databasename) == null) {
-			data = new DatabaseData(databasename);
-			DatabaseCache.put(databasename, data);
-			Map<String, XMLData> xmls = data.getTables();
-			return xmls.get(TableName);
-		} else {
-			data = DatabaseCache.get(databasename);
-			Map<String, XMLData> xmls = data.getTables();
-			return xmls.get(TableName);
+			if (DatabaseCache.get(databasename) == null) {
+				data = new DatabaseData(databasename);
+				DatabaseCache.put(databasename, data);
+
+				return data.getTable(TableName);
+			} else {
+				data = DatabaseCache.get(databasename);
+
+				return data.getTable(TableName);
+			}
 		}
-
 	}
 
 	public void unloadCache() throws SQLException {
-		System.out.println(DatabaseCache.size());
+
 		for (Entry<File, DatabaseData> e : DatabaseCache.entrySet()) {
 			DatabaseData databaseData = e.getValue();
 			Map<String, XMLData> xmls = databaseData.getTables();
@@ -78,6 +80,30 @@ public class DataBaseBufferPool implements Singleton {
 				xmlData.SaveXml();
 
 			}
+		}
+	}
+
+	public void CheckCache() throws SQLException {
+
+		for (Entry<File, DatabaseData> e : DatabaseCache.entrySet()) {
+			DatabaseData databaseData = e.getValue();
+			Map<String, XMLData> xmls = databaseData.getTables();
+			Map<String, Long> xmlsLifetime = databaseData.getTablesLifetime();
+			for (Entry<String, XMLData> en : xmls.entrySet()) {
+				
+				if (System.currentTimeMillis() - xmlsLifetime.get(en.getKey())   > 40000) {
+					XMLData xmlData = en.getValue();
+					xmlData.SaveXml();
+				//	System.out.println(xmlData.getXml().get("tablename"));
+					xmls.remove(en.getKey());
+					xmlsLifetime.remove(en.getKey());
+				//	System.out.println("removed");
+					return;
+
+				}
+
+			}
+
 		}
 
 	}

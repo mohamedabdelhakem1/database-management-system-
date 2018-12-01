@@ -50,13 +50,10 @@ public class ClientCommand implements CommandFactory {
 		} else if (strs[0].equalsIgnoreCase("delete") || strs[0].equalsIgnoreCase("insert")
 				|| (strs[0].equalsIgnoreCase("update"))) {
 
-			countUpdates++;
+		//	countUpdates++;
 			strategy = new UpdateQueryRequest(database);
 			strategy.getSpecifiedRequest(textArea, command);
-			if (countUpdates > 3) {
-				countUpdates = 0;
-				pool.unloadCache();
-			}
+			
 
 		} else if (strs[0].equalsIgnoreCase("select")) {
 			strategy = new SelectQueryRequest(database);

@@ -14,7 +14,9 @@ public class XMLData {
 	private String[] types;
 	private File databasename;
 	private String tableName;
-
+	private ReadXml readXml ;
+	private XSDReader xsdReader;
+	private WriteXml writeXml;
 	public XMLData(File databasename, String tableName) {
 		this.tableName = tableName;
 		this.databasename = databasename;
@@ -25,11 +27,11 @@ public class XMLData {
 			xmlData = new HashMap<>();
 			xmlData.put("database", databasename);
 			xmlData.put("tablename", tableName);
-			ReadXml readXml = new ReadXml();
+			readXml = new ReadXml();
 			Object[][] xml = readXml.getArray(new File(((File) xmlData.get("database")).getAbsolutePath()
 					+ System.getProperty("file.separator") + xmlData.get("tablename")
 					+ System.getProperty("file.separator") + xmlData.get("tablename") + ".xml"));
-			XSDReader xsdReader = new XSDReader();
+			xsdReader = new XSDReader();
 			xsdReader.ReadXSD(((File) xmlData.get("database")).getAbsolutePath() + System.getProperty("file.separator")
 					+ xmlData.get("tablename") + System.getProperty("file.separator") + xmlData.get("tablename")
 					+ ".xsd");
@@ -56,7 +58,7 @@ public class XMLData {
 	}
 
 	public void SaveXml() throws SQLException {
-		WriteXml writeXml = new WriteXml();
+		 writeXml = new WriteXml();
 		writeXml.writeTable((Object[][])xmlData.get("array"), columns, new File(((File) xmlData.get("database")).getAbsolutePath()
 				+ System.getProperty("file.separator") + xmlData.get("tablename")));
 	}

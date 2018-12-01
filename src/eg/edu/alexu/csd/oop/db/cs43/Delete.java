@@ -22,13 +22,14 @@ public class Delete implements ExecuteUpdateQueryCommad {
 	
 	private File tablefolder;
 	private Map<String, Object> map;
+	private DataBaseBufferPool pool;
 	public Delete(File database, String[] columns, String[] conditions, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
 		this.database = database;
 		tablefolder = new File(database.getAbsolutePath() + System.getProperty("file.separator")
 					+ tablename );
-		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		pool = DataBaseBufferPool.getInstance();
 		XMLData xml = pool.getTable(database, tablename);
 		map = xml.getXml();
 		

@@ -17,13 +17,16 @@ import eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys;
 
 import eg.edu.alexu.csd.oop.db.cs43.Insert;
 import eg.edu.alexu.csd.oop.db.cs43.Update;
+import eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses.Singleton;
 
-public class MyDatabase implements Database {
+public class MyDatabase implements Database, Singleton {
 	private CommandsParser commandsParser;
 	private File dataBaseFile;
 	private static Database database = null;
 	private boolean open = false;
-
+	private ExecuteUpdateQueryCommad executeUpdateQuery;
+	private ExecuteStructureQuerys executeStructureQuerys;
+	private ExecuteQueryCommand executeQuery;
 	public MyDatabase() {
 		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
 		try {
@@ -76,7 +79,7 @@ public class MyDatabase implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		ExecuteStructureQuerys executeStructureQuerys = new ExecuteStructureQuerys();
+		executeStructureQuerys = new ExecuteStructureQuerys();
 		commandsParser.validateCommand(query);
 
 		executeStructureQuerys.setDataBaseFile(dataBaseFile);
@@ -127,7 +130,7 @@ public class MyDatabase implements Database {
 	public int executeUpdateQuery(String query) throws SQLException {
 
 		commandsParser.validateCommand(query);
-		ExecuteUpdateQueryCommad executeUpdateQuery;
+
 		if (dataBaseFile == null) {
 			throw new SQLException();
 		}
@@ -171,8 +174,8 @@ public class MyDatabase implements Database {
 		throw new SQLException();
 	}
 
-	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) {
-		ExecuteQuery executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions, tablename);
+	private Object[][] SelectColumns(String tablename, String[] columns, String[] conditions) throws SQLException {
+		executeQuery = new ExecuteQuery(dataBaseFile, columns, conditions, tablename);
 		return executeQuery.execute();
 
 	}

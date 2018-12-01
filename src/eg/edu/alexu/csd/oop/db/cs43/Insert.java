@@ -14,7 +14,7 @@ public class Insert implements ExecuteUpdateQueryCommad {
 	private String tableName;
 	private String[] columnsNames;
 	private String[] columnsValues;
-
+	private DataBaseBufferPool pool;
 	public Insert(String[] columnsValues, File DataBaseFile, String tableName, String[] columnsnames) {
 		this.columnsValues = columnsValues;
 		this.DataBaseFile = DataBaseFile;
@@ -32,7 +32,7 @@ public class Insert implements ExecuteUpdateQueryCommad {
 			return 0;
 		}
 
-		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		pool = DataBaseBufferPool.getInstance();
 		XMLData xml = pool.getTable(DataBaseFile, tableName);
 		Map<String, Object> map = xml.getXml();
 		String[] tableColumnsNames = (String[]) map.get("columns");

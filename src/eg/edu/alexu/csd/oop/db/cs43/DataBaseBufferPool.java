@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.SingleSelectionModel;
+
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs43.commandConcreteClasses.Singleton;
 import javafx.scene.AmbientLight;
 
-public class DataBaseBufferPool {
+public class DataBaseBufferPool implements Singleton {
 	private static DataBaseBufferPool pool;
 	private static Map<File, DatabaseData> DatabaseCache;
 	private static int count = 0;

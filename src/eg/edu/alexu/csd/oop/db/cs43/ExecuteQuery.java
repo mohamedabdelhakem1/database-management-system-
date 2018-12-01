@@ -20,11 +20,11 @@ public class ExecuteQuery implements ExecuteQueryCommand {
 	private ConditionsManipulation manipulation;
 	private ColumnsManipulation columnsManipulation;
 	private Map<String, Object> map;
-
+	private DataBaseBufferPool pool;
 	public ExecuteQuery(File database, String[] columns, String[] conditions, String tablename) {
 		this.columns = columns;
 		this.conditions = conditions;
-		DataBaseBufferPool pool = DataBaseBufferPool.getInstance();
+		pool = DataBaseBufferPool.getInstance();
 		XMLData xml = pool.getTable(database, tablename);
 		map = xml.getXml();
 		values = (Object[][]) map.get("array");

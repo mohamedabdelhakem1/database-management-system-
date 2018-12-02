@@ -35,6 +35,7 @@ public class ClientCommand implements CommandFactory {
 		Pattern pat = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		String[] strs = pat.split(command.trim()); // removed trailing and leading spaces
 
+		
 		if (strs[0].equalsIgnoreCase("create")) {
 			if (strs[1].equalsIgnoreCase("database")) {
 				strategy = new StructureQueryRequest(database);

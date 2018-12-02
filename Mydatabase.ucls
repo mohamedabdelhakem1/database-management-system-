@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="eg.edu.alexu.csd.oop.db.cs43.concreteclass.MyDatabase" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/concreteclass/MyDatabase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="146" width="250" x="282" y="-58"/>    
+    <position height="146" width="250" x="593" y="-98"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -13,7 +13,7 @@
   <interface id="2" language="java" name="eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteUpdateQueryCommad" 
     project="Dmbs" file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/concreteclass/ExecuteUpdateQueryCommad.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="76" width="196" x="312" y="106"/>    
+    <position height="-1" width="-1" x="637" y="106"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -23,7 +23,7 @@
   <interface id="3" language="java" name="eg.edu.alexu.csd.oop.db.cs43.concreteclass.ExecuteQueryCommand" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/concreteclass/ExecuteQueryCommand.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="732" y="46"/>    
+    <position height="-1" width="-1" x="1035" y="61"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -32,7 +32,7 @@
   </interface>  
   <class id="4" language="java" name="eg.edu.alexu.csd.oop.db.cs43.Insert" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/Insert.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="216" x="162" y="217"/>    
+    <position height="80" width="216" x="212" y="170"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -41,7 +41,7 @@
   </class>  
   <class id="5" language="java" name="eg.edu.alexu.csd.oop.db.cs43.Update" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/Update.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="94" width="226" x="432" y="224"/>    
+    <position height="-1" width="-1" x="587" y="221"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -50,7 +50,7 @@
   </class>  
   <class id="6" language="java" name="eg.edu.alexu.csd.oop.db.cs43.Delete" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/Delete.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="807" y="268"/>    
+    <position height="-1" width="-1" x="798" y="215"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -59,7 +59,7 @@
   </class>  
   <class id="7" language="java" name="eg.edu.alexu.csd.oop.db.cs43.ExecuteQuery" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/ExecuteQuery.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="746" y="153"/>    
+    <position height="-1" width="-1" x="1040" y="189"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -68,7 +68,7 @@
   </class>  
   <class id="8" language="java" name="eg.edu.alexu.csd.oop.db.cs43.ExecuteStructureQuerys" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/ExecuteStructureQuerys.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="161" width="185" x="13" y="34"/>    
+    <position height="161" width="185" x="254" y="-23"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -77,7 +77,7 @@
   </class>  
   <class id="9" language="java" name="eg.edu.alexu.csd.oop.db.cs43.DataBaseBufferPool" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/DataBaseBufferPool.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="617" y="459"/>    
+    <position height="-1" width="-1" x="919" y="383"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -86,7 +86,7 @@
   </class>  
   <class id="10" language="java" name="eg.edu.alexu.csd.oop.db.cs43.DatabaseData" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/DatabaseData.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="336" y="464"/>    
+    <position height="-1" width="-1" x="598" y="401"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -95,7 +95,7 @@
   </class>  
   <class id="11" language="java" name="eg.edu.alexu.csd.oop.db.cs43.XMLData" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/XMLData.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="96" y="453"/>    
+    <position height="-1" width="-1" x="268" y="338"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -104,7 +104,7 @@
   </class>  
   <class id="12" language="java" name="eg.edu.alexu.csd.oop.db.cs43.WriteXml" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/WriteXml.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="494" y="615"/>    
+    <position height="-1" width="-1" x="372" y="500"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -113,7 +113,7 @@
   </class>  
   <class id="13" language="java" name="eg.edu.alexu.csd.oop.db.cs43.XSDReader" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/XSDReader.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="130" width="135" x="159" y="563"/>    
+    <position height="-1" width="-1" x="178" y="507"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -122,131 +122,183 @@
   </class>  
   <class id="14" language="java" name="eg.edu.alexu.csd.oop.db.cs43.ReadXml" project="Dmbs" 
     file="/Dmbs/src/eg/edu/alexu/csd/oop/db/cs43/ReadXml.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="67" y="603"/>    
+    <position height="-1" width="-1" x="26" y="464"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="15">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="3"/>  
-  </realization>  
-  <realization id="16">    
+  <association id="15">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="16" name="databaseTables">        
+        <position height="0" width="0" x="172" y="-115"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="172" y="-115"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="19" name="pool">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="1">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="21">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <association id="17">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="18" name="readXml"/>      
-      <multiplicity id="19" minimum="0" maximum="1"/>    
+  <realization id="22">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="23">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="24" name="executeQuery">        
+        <position height="0" width="0" x="303" y="15"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="303" y="15"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="20">    
+  <association id="26">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="21" name="DatabaseCache"/>      
-      <multiplicity id="22" minimum="0" maximum="2147483647"/>    
+      <attribute id="27" name="pool">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="23">    
-    <end type="SOURCE" refId="6"/>    
+  <association id="29">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="30" name="pool">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="33" name="pool">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="35">    
+    <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <association id="24">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="25" name="executeStructureQuerys"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="28" name="pool"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="30">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="31" name="pool"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="33">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="34" name="pool"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="36">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="37" name="pool"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+      <attribute id="37" name="pool">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </attribute>      
+      <multiplicity id="38" minimum="0" maximum="1">        
+        <position height="0" width="0" x="302" y="-76"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="39">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="40" name="databaseTables"/>      
-      <multiplicity id="41" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="42">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <association id="43">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="44" name="executeQuery"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="46">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="47" name="executeUpdateQuery"/>      
-      <multiplicity id="48" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="49">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="50" name="writeXml"/>      
-      <multiplicity id="51" minimum="0" maximum="1"/>    
+      <attribute id="40" name="writeXml">        
+        <position height="0" width="0" x="-122" y="-115"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-122" y="-115"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="52">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="53" name="pool"/>      
-      <multiplicity id="54" minimum="0" maximum="1"/>    
+  <association id="42">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="43" name="xsdReader">        
+        <position height="0" width="0" x="-48" y="-121"/>      
+      </attribute>      
+      <multiplicity id="44" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-48" y="-121"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="46" name="DatabaseCache">        
+        <position height="0" width="0" x="262" y="-63"/>      
+      </attribute>      
+      <multiplicity id="47" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="262" y="-63"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="48">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="49" name="readXml">        
+        <position height="0" width="0" x="-41" y="-139"/>      
+      </attribute>      
+      <multiplicity id="50" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-41" y="-139"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="51">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="52">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="53" name="executeUpdateQuery">        
+        <position height="0" width="0" x="227" y="-38"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="1">        
+        <position height="0" width="0" x="227" y="-38"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="55">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="56" name="xsdReader"/>      
-      <multiplicity id="57" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="56" name="executeStructureQuerys">        
+        <position height="0" width="0" x="241" y="-57"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="1">        
+        <position height="0" width="0" x="241" y="-57"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
